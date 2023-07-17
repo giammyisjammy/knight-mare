@@ -8,8 +8,9 @@ import {
   navigationLinks,
   navigationStyle
 } from './config'
-import { notion } from './notion-api'
+import { notion, notionClient } from './notion-api'
 import { getPreviewImageMap } from './preview-images'
+import { IFormInput } from '@/components/MembershipForm'
 
 const getNavigationLinkPages = pMemoize(
   async (): Promise<ExtendedRecordMap[]> => {
@@ -65,4 +66,74 @@ export async function getPage(pageId: string): Promise<ExtendedRecordMap> {
 
 export async function search(params: SearchParams): Promise<SearchResults> {
   return notion.search(params)
+}
+
+export async function createDatabaseEntry(subscriber: IFormInput) {
+  // If the new page is a child of an existing database, the keys of the properties object body param must match the parent database's properties.
+  const database_id = process.env.NOTION_DATABASE_ID
+  const response = await notionClient.pages.create({
+    // cover: {
+    //   type: 'external',
+    //   external: {
+    //     url: 'https://upload.wikimedia.org/wikipedia/commons/6/62/Tuscankale.jpg'
+    //   }
+    // },
+    // icon: {
+    //   type: 'emoji',
+    //   emoji: '🥬'
+    // },
+    parent: {
+      type: 'database_id',
+      database_id
+    },
+    properties: {
+      Name: {
+        title: [
+          {
+            text: {
+              content: subscriber.name
+            }
+          }
+        ]
+      },
+      Gender: {
+        select: {
+          name: subscriber.gender
+        }
+      }
+    }
+    // children: [
+    //   {
+    //     object: 'block',
+    //     heading_2: {
+    //       rich_text: [
+    //         {
+    //           text: {
+    //             content: 'Lacinato kale'
+    //           }
+    //         }
+    //       ]
+    //     }
+    //   },
+    //   {
+    //     object: 'block',
+    //     paragraph: {
+    //       rich_text: [
+    //         {
+    //           text: {
+    //             content:
+    //               'Lacinato kale is a variety of kale with a long tradition in Italian cuisine, especially that of Tuscany. It is also known as Tuscan kale, Italian kale, dinosaur kale, kale, flat back kale, palm tree kale, or black Tuscan palm.',
+    //             link: {
+    //               url: 'https://en.wikipedia.org/wiki/Lacinato_kale'
+    //             }
+    //           },
+    //           href: 'https://en.wikipedia.org/wiki/Lacinato_kale'
+    //         }
+    //       ],
+    //       color: 'default'
+    //     }
+    //   }
+    // ]
+  })
+  console.log(response)
 }
