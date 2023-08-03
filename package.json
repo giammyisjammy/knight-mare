@@ -1,10 +1,10 @@
 {
-  "name": "nextjs-notion-starter-kit",
+  "name": "knight-mare",
   "version": "2.0.0",
   "private": true,
-  "description": "The perfect starter kit for building beautiful websites with Next.js and Notion.",
-  "author": "Travis Fischer <travis@transitivebullsh.it>",
-  "repository": "transitive-bullshit/nextjs-notion-starter-kit",
+  "description": "Frontend project for the Club Scacchi Cantù public website.",
+  "author": "Gianmarco Bado <49064602+giammyisjammy@users.noreply.github.com>",
+  "repository": "giammyisjammy/knight-mare",
   "license": "MIT",
   "engines": {
     "node": ">=16"

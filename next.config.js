@@ -13,7 +13,10 @@ module.exports = withBundleAnalyzer({
       'pbs.twimg.com',
       'abs.twimg.com',
       's3.us-west-2.amazonaws.com',
-      'transitivebullsh.it'
+      'clubscacchicantu.it', // TODO domain name
+      'clubscacchicantu.com', // TODO domain name
+      'chessclubcantu.it', // TODO domain name
+      'chessclubcantu.com' // TODO domain name
     ],
     formats: ['image/avif', 'image/webp'],
     dangerouslyAllowSVG: true,
