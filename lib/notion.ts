@@ -10,7 +10,7 @@ import {
 } from './config'
 import { notion, notionClient } from './notion-api'
 import { getPreviewImageMap } from './preview-images'
-import { IFormInput } from '@/components/MembershipForm'
+import { IClubMemberDTO } from '@/lib/ClubMember'
 
 const getNavigationLinkPages = pMemoize(
   async (): Promise<ExtendedRecordMap[]> => {
@@ -68,7 +68,7 @@ export async function search(params: SearchParams): Promise<SearchResults> {
   return notion.search(params)
 }
 
-export async function createDatabaseEntry(subscriber: IFormInput) {
+export async function createDatabaseEntry(subscriber: IClubMemberDTO) {
   // If the new page is a child of an existing database, the keys of the properties object body param must match the parent database's properties.
   const database_id = process.env.NOTION_DATABASE_ID
   const response = await notionClient.pages.create({
@@ -87,53 +87,51 @@ export async function createDatabaseEntry(subscriber: IFormInput) {
       database_id
     },
     properties: {
-      Name: {
+      // ID: {
+      //   id: 'tqqd',
+      //   type: 'unique_id',
+      //   unique_id: {
+      //     number: subscriber.id,
+      //     prefix: 'LS'
+      //   }
+      // },
+      'Nome e Cognome': {
         title: [
           {
             text: {
-              content: subscriber.name
+              content: subscriber.fullName
             }
           }
         ]
       },
-      Gender: {
-        select: {
-          name: subscriber.gender
-        }
-      }
+      // 'Stato pagamenti': {"select": {
+      //   "name": "Marketing"
+      // }},
+      // CAP: { number: subscriber.cap },
+      'Codice Fiscale': {
+        title: [
+          {
+            text: {
+              content: subscriber.fiscalCode
+            }
+          }
+        ]
+      },
+      'Consenso privacy': { checkbox: subscriber.privacyConsent },
+      'Consenso trattamento immagini': { checkbox: subscriber.imagesConsent },
+      'Data di Nascita': {
+        date: { start: JSON.stringify(subscriber.birthDate) }
+      },
+      Email: { email: subscriber.email },
+      // Indirizzo: { text: { content: subscriber.address } },
+      'Nato/a a': { select: { name: subscriber.birthPlace } },
+      // 'Provincia di Nascita': { select: { name: subscriber.birthProvince } },
+      // 'Provincia residenza': { select: { name: subscriber.cityProvince } },
+      'Residente in': { select: { name: subscriber.city } },
+      // 'Stato associativo': { select: { name: subscriber.statoAssociativo } },
+      Telefono: { phone_number: subscriber.phoneNr }
+      // 'Tipologia affiliazione': { select: { name: subscriber.tipologiaAffiliazione } },
     }
-    // children: [
-    //   {
-    //     object: 'block',
-    //     heading_2: {
-    //       rich_text: [
-    //         {
-    //           text: {
-    //             content: 'Lacinato kale'
-    //           }
-    //         }
-    //       ]
-    //     }
-    //   },
-    //   {
-    //     object: 'block',
-    //     paragraph: {
-    //       rich_text: [
-    //         {
-    //           text: {
-    //             content:
-    //               'Lacinato kale is a variety of kale with a long tradition in Italian cuisine, especially that of Tuscany. It is also known as Tuscan kale, Italian kale, dinosaur kale, kale, flat back kale, palm tree kale, or black Tuscan palm.',
-    //             link: {
-    //               url: 'https://en.wikipedia.org/wiki/Lacinato_kale'
-    //             }
-    //           },
-    //           href: 'https://en.wikipedia.org/wiki/Lacinato_kale'
-    //         }
-    //       ],
-    //       color: 'default'
-    //     }
-    //   }
-    // ]
   })
   console.log(response)
 }

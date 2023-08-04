@@ -1,13 +1,14 @@
 import * as React from 'react'
 
-import MembershipForm, { IFormInput } from './MembershipForm'
+import MembershipForm from './MembershipForm'
 import { SubmitHandler } from 'react-hook-form'
 
 import { api } from '@/lib/config'
 import fetcher from '@/lib/fetcher'
+import { IClubMemberDTO } from '@/lib/ClubMember'
 
 export default function NewMembershipPage() {
-  const onConfirm: SubmitHandler<IFormInput> = async (formData) => {
+  const onConfirm: SubmitHandler<IClubMemberDTO> = async (formData) => {
     console.log('New subscription', formData)
     try {
       const result = await fetcher(api.createDatabaseEntry, {
