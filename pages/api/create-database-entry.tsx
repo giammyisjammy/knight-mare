@@ -1,4 +1,4 @@
-import { IClubMemberDTO } from '@/lib/ClubMember'
+import { ClubMember } from '@/lib/ClubMember'
 import { createDatabaseEntry } from '@/lib/notion'
 import { NextApiRequest, NextApiResponse } from 'next'
 
@@ -12,7 +12,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
   try {
     console.log('<<< typeof body', typeof req.body)
-    const subscriber: IClubMemberDTO = JSON.parse(req.body)
+    const subscriber = ClubMember.deserialize(JSON.parse(req.body))
     console.log('<<< lambda create-database-entry', subscriber)
 
     const results = await createDatabaseEntry(subscriber)

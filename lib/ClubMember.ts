@@ -1,8 +1,10 @@
 export interface IClubMemberDTO {
   id: string
   fullName: string
-  // TODO Stato pagamenti
-  // TODO CAP
+  // Stato pagamenti
+  paymentStatus: string
+  // CAP
+  CAP: string
   // Codice Fiscale
   fiscalCode: string
   // Consenso privacy
@@ -10,25 +12,29 @@ export interface IClubMemberDTO {
   // Consenso trattamento immagini
   imagesConsent: boolean
   // Creato il
-  creationDate: Date
+  creationDate: string
   // Data di Nascita
-  birthDate: Date
+  birthDate: string
   // Email
   email: string
   // Indirizzo
   address: string
   // Nato/a a
   birthPlace: string
-  // TODO Provincia di Nascita
-  // TODO Provincia residenza
+  // Provincia di Nascita
+  birthProvince: string
+  // Provincia residenza
+  cityProvince: string
   // Residente in
   city: string
-  // TODO Stato associativo
+  // Stato associativo
+  membershipStatus: string
   // Telefono
   phoneNr: string
-  // TODO Tipologia affiliazione
+  // Tipologia affiliazione
+  membershipType: string
   // Ultima modifica
-  lastEdit: Date
+  lastEdit: string
 }
 
 export class ClubMember {
@@ -40,7 +46,9 @@ export class ClubMember {
     // Cognome
     public lastName = '',
     // TODO Stato pagamenti
+    public paymentStatus = '',
     // TODO CAP
+    public CAP = '',
     // Codice Fiscale
     public fiscalCode = '',
     // Consenso privacy
@@ -57,14 +65,18 @@ export class ClubMember {
     public address = '',
     // Nato/a a
     public birthPlace = '',
-    // TODO Provincia di Nascita
-    // TODO Provincia residenza
+    // Provincia di Nascita
+    public birthProvince = '',
+    // Provincia residenza
+    public cityProvince = '',
     // Residente in
     public city = '',
-    // TODO Stato associativo
+    // Stato associativo
+    public membershipStatus = '',
     // Telefono
     public phoneNr = '',
-    // TODO Tipologia affiliazione
+    // Tipologia affiliazione
+    public membershipType = '',
     // Ultima modifica
     public lastEdit: Date = new Date()
   ) {}
@@ -78,8 +90,10 @@ export class ClubMember {
     const model = new ClubMember(
       firstName,
       lastName,
-      // TODO Stato pagamenti
-      // TODO CAP
+      // Stato pagamenti
+      dto.paymentStatus,
+      // CAP
+      dto.CAP,
       // Codice Fiscale
       dto.fiscalCode,
       // Consenso privacy
@@ -87,25 +101,29 @@ export class ClubMember {
       // Consenso trattamento immagini
       dto.imagesConsent,
       // Creato il
-      dto.creationDate,
+      new Date(dto.creationDate),
       // Data di Nascita
-      dto.birthDate,
+      new Date(dto.birthDate),
       // Email
       dto.email,
       // Indirizzo
       dto.address,
       // Nato/a a
       dto.birthPlace,
-      // TODO Provincia di Nascita
-      // TODO Provincia residenza
+      // Provincia di Nascita
+      dto.birthProvince,
+      // Provincia residenza
+      dto.cityProvince,
       // Residente in
       dto.city,
-      // TODO Stato associativo
+      // Stato associativo
+      dto.membershipStatus,
       // Telefono
       dto.phoneNr,
-      // TODO Tipologia affiliazione
+      // Tipologia affiliazione
+      dto.membershipType,
       // Ultima modifica
-      dto.lastEdit
+      new Date(dto.lastEdit)
     )
     model.id = dto.id
 
@@ -116,8 +134,10 @@ export class ClubMember {
     return {
       id: this.id,
       fullName: this.fullName,
-      // TODO Stato pagamenti
-      // TODO CAP
+      // Stato pagamenti
+      paymentStatus: this.paymentStatus,
+      // CAP
+      CAP: this.CAP,
       // Codice Fiscale
       fiscalCode: this.fiscalCode,
       // Consenso privacy
@@ -125,25 +145,29 @@ export class ClubMember {
       // Consenso trattamento immagini
       imagesConsent: this.imagesConsent,
       // Creato il
-      creationDate: this.creationDate,
+      creationDate: this.creationDate.toISOString(),
       // Data di Nascita
-      birthDate: this.birthDate,
+      birthDate: this.birthDate.toISOString(),
       // Email
       email: this.email,
       // Indirizzo
       address: this.address,
       // Nato/a a
       birthPlace: this.birthPlace,
-      // TODO Provincia di Nascita
-      // TODO Provincia residenza
+      // Provincia di Nascita
+      birthProvince: this.birthProvince,
+      // Provincia residenza
+      cityProvince: this.cityProvince,
       // Residente in
       city: this.city,
-      // TODO Stato associativo
+      // Stato associativo
+      membershipStatus: this.membershipStatus,
       // Telefono
       phoneNr: this.phoneNr,
-      // TODO Tipologia affiliazione
+      // Tipologia affiliazione
+      membershipType: this.membershipType,
       // Ultima modifica
-      lastEdit: this.lastEdit
+      lastEdit: this.lastEdit.toISOString()
     }
   }
 }

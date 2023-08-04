@@ -1,36 +1,16 @@
 import * as React from 'react'
 // import VisuallyHidden from './VisuallyHidden'
 import { useForm, SubmitHandler, SubmitErrorHandler } from 'react-hook-form'
-import { ClubMember, IClubMemberDTO } from '@/lib/ClubMember'
+import { ClubMember } from '@/lib/ClubMember'
 
-interface FormFields {
-  Nome: string
-  Cognome: string
-  'Codice Fiscale': string
-  Email: string
-  Indirizzo: string
-  'Nato/a a': string
-  'Residente in': string
-  Telefono: string
-  'Stato Pagamenti': string
-  CAP: string
-  'Provincia di Nascita': string
-  'Provincia residenza': string
-  'Stato Associativo': string
-  'Tipologia affiliazione': string
-  'Data di Nascita': Date
-  'Consenso Privacy': boolean
-  'Consenso Trattamento Immagini': boolean
-  'Tipologia Affiliazione': string
-}
 type Props =
   | {
-      onConfirm: SubmitHandler<undefined>
-      onInvalid?: SubmitErrorHandler<IClubMemberDTO>
+      onConfirm: SubmitHandler<ClubMember | undefined> // HACK should be just undefined
+      onInvalid?: SubmitErrorHandler<ClubMember>
     } & (
       | {
           mode: 'edit'
-          memberInfo: IClubMemberDTO
+          memberInfo: ClubMember
         }
       | {
           mode: 'add'
@@ -39,41 +19,70 @@ type Props =
     )
 export default function MembershipForm({
   onConfirm,
-  onInvalid
-}: // mode,
-// memberInfo
-Props) {
-  // const defaultValues = mode === 'edit' ? memberInfo : new ClubMember()
+  onInvalid,
+  mode,
+  memberInfo
+}: Props) {
+  const defaultValues = mode === 'edit' ? memberInfo : new ClubMember()
 
   const {
     register,
     handleSubmit,
     formState: { errors }
-  } = useForm<FormFields>()
+  } = useForm<ClubMember>({ defaultValues })
   console.log(errors)
 
   return (
-    <form onSubmit={handleSubmit(onConfirm, onInvalid)}>
-      {/* <form onSubmit={handleSubmit(console.log)}> */}
+    <form
+      onSubmit={handleSubmit(
+        // HACK
+        (formData: ClubMember) => {
+          onConfirm(
+            new ClubMember(
+              formData.firstName,
+              formData.lastName,
+              formData.paymentStatus,
+              formData.CAP,
+              formData.fiscalCode,
+              formData.privacyConsent,
+              formData.imagesConsent,
+              formData.creationDate,
+              new Date(formData.birthDate),
+              formData.email,
+              formData.address,
+              formData.birthPlace,
+              formData.birthProvince,
+              formData.cityProvince,
+              formData.city,
+              formData.membershipStatus,
+              formData.phoneNr,
+              formData.membershipType,
+              formData.lastEdit
+            )
+          )
+        },
+        onInvalid
+      )}
+    >
       <h1>Personal information</h1>
       <p>Type your personal information here</p>
       <BasicInputField
         type='text'
         label='Nome'
         placeholder='Nome'
-        {...register('Nome', { required: true, maxLength: 80 })}
+        {...register('firstName', { required: true, maxLength: 80 })}
       />
       <BasicInputField
         type='text'
         label='Cognome'
         placeholder='Cognome'
-        {...register('Cognome', { required: true, maxLength: 100 })}
+        {...register('lastName', { required: true, maxLength: 100 })}
       />
       <BasicInputField
         type='text'
         label='Codice Fiscale'
         placeholder='Codice Fiscale'
-        {...register('Codice Fiscale', {
+        {...register('fiscalCode', {
           required: true,
           pattern:
             /^([A-Z]{6}[0-9LMNPQRSTUV]{2}[ABCDEHLMPRST]{1}[0-9LMNPQRSTUV]{2}[A-Z]{1}[0-9LMNPQRSTUV]{3}[A-Z]{1})$|([0-9]{11})$/i
@@ -83,38 +92,38 @@ Props) {
         type='text'
         label='Email'
         placeholder='Email'
-        {...register('Email', { required: true, pattern: /^\S+@\S+$/i })}
+        {...register('email', { required: true, pattern: /^\S+@\S+$/i })}
       />
 
       <BasicInputField
         type='text'
         label='Indirizzo'
         placeholder='Indirizzo'
-        {...register('Indirizzo', { required: true })}
+        {...register('address', { required: true })}
       />
       <BasicInputField
         type='text'
         label='Nato/a a'
         placeholder='Nato/a a'
-        {...register('Nato/a a', {})}
+        {...register('birthPlace', {})}
       />
       <BasicInputField
         type='text'
         label='Residente in'
         placeholder='Residente in'
-        {...register('Residente in', {})}
+        {...register('city', {})}
       />
       <BasicInputField
         label='Telefono'
         type='tel'
         placeholder='000-000-0000'
-        {...register('Telefono', {
+        {...register('phoneNr', {
           required: true,
           minLength: 6,
-          maxLength: 12
+          maxLength: 15
         })}
       />
-      <SelectField label='Stato Pagamenti' {...register('Stato Pagamenti')}>
+      <SelectField label='Stato Pagamenti' {...register('paymentStatus')}>
         {['Pagato', 'Non pagato'].map((value, key) => (
           <option key={key} value={value}>
             {value}
@@ -131,15 +140,15 @@ Props) {
         type='text'
         label='Provincia di Nascita'
         placeholder='Provincia di Nascita'
-        {...register('Provincia di Nascita', { required: true, maxLength: 2 })}
+        {...register('birthProvince', { required: true, maxLength: 2 })}
       />
       <BasicInputField
         type='text'
         label='Provincia di Residenza'
         placeholder='Provincia residenza'
-        {...register('Provincia residenza', { required: true, maxLength: 2 })}
+        {...register('cityProvince', { required: true, maxLength: 2 })}
       />
-      <SelectField label='Stato Associativo' {...register('Stato Associativo')}>
+      <SelectField label='Stato Associativo' {...register('membershipStatus')}>
         {['Attivo', 'Dismesso', 'Congelato'].map((value, key) => (
           <option key={key} value={value}>
             {value}
@@ -148,7 +157,7 @@ Props) {
       </SelectField>
       <SelectField
         label='Tipologia Affiliazione'
-        {...register('Tipologia Affiliazione', { required: true })}
+        {...register('membershipType', { required: true })}
       >
         {[
           'Socio Under18',
@@ -164,19 +173,19 @@ Props) {
       <BasicInputField
         label='Data di Nascita'
         type='datetime-local'
-        {...register('Data di Nascita', { required: true })}
+        {...register('birthDate', { required: true })}
       />
       <BasicInputField
         type='checkbox'
         label='Consenso Privacy'
         placeholder='Consenso Privacy'
-        {...register('Consenso Privacy', { required: true })}
+        {...register('privacyConsent', { required: true })}
       />
       <BasicInputField
         type='checkbox'
         label='Consenso Trattamento Immagini'
         placeholder='Consenso Trattamento Immagini'
-        {...register('Consenso Trattamento Immagini', {})}
+        {...register('imagesConsent', {})}
       />
       <input type='submit' />
     </form>

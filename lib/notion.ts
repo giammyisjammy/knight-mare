@@ -10,7 +10,7 @@ import {
 } from './config'
 import { notion, notionClient } from './notion-api'
 import { getPreviewImageMap } from './preview-images'
-import { IClubMemberDTO } from '@/lib/ClubMember'
+import { ClubMember } from '@/lib/ClubMember'
 
 const getNavigationLinkPages = pMemoize(
   async (): Promise<ExtendedRecordMap[]> => {
@@ -68,7 +68,7 @@ export async function search(params: SearchParams): Promise<SearchResults> {
   return notion.search(params)
 }
 
-export async function createDatabaseEntry(subscriber: IClubMemberDTO) {
+export async function createDatabaseEntry(subscriber: ClubMember) {
   // If the new page is a child of an existing database, the keys of the properties object body param must match the parent database's properties.
   const database_id = process.env.NOTION_DATABASE_ID
   const response = await notionClient.pages.create({
@@ -87,14 +87,6 @@ export async function createDatabaseEntry(subscriber: IClubMemberDTO) {
       database_id
     },
     properties: {
-      // ID: {
-      //   id: 'tqqd',
-      //   type: 'unique_id',
-      //   unique_id: {
-      //     number: subscriber.id,
-      //     prefix: 'LS'
-      //   }
-      // },
       'Nome e Cognome': {
         title: [
           {
@@ -104,33 +96,90 @@ export async function createDatabaseEntry(subscriber: IClubMemberDTO) {
           }
         ]
       },
-      // 'Stato pagamenti': {"select": {
-      //   "name": "Marketing"
-      // }},
-      // CAP: { number: subscriber.cap },
-      'Codice Fiscale': {
-        title: [
+      CAP: {
+        // id: 'vjFZ',
+        rich_text: [
           {
-            text: {
-              content: subscriber.fiscalCode
-            }
+            text: { content: subscriber.CAP }
           }
         ]
       },
-      'Consenso privacy': { checkbox: subscriber.privacyConsent },
-      'Consenso trattamento immagini': { checkbox: subscriber.imagesConsent },
-      'Data di Nascita': {
-        date: { start: JSON.stringify(subscriber.birthDate) }
+      'Codice Fiscale': {
+        // id: 'qve%3B',
+        rich_text: [
+          {
+            text: { content: subscriber.fiscalCode }
+          }
+        ]
       },
-      Email: { email: subscriber.email },
-      // Indirizzo: { text: { content: subscriber.address } },
-      'Nato/a a': { select: { name: subscriber.birthPlace } },
-      // 'Provincia di Nascita': { select: { name: subscriber.birthProvince } },
-      // 'Provincia residenza': { select: { name: subscriber.cityProvince } },
-      'Residente in': { select: { name: subscriber.city } },
-      // 'Stato associativo': { select: { name: subscriber.statoAssociativo } },
-      Telefono: { phone_number: subscriber.phoneNr }
-      // 'Tipologia affiliazione': { select: { name: subscriber.tipologiaAffiliazione } },
+      'Consenso Privacy': {
+        // id: 'UNGT',
+        checkbox: subscriber.privacyConsent
+      },
+      'Consenso Trattamento Immagini': {
+        // id: 'yz%5Bs',
+        checkbox: subscriber.imagesConsent
+      },
+      'Data di Nascita': {
+        // id: 'FkdU',
+        date: { start: subscriber.birthDate.toISOString() }
+      },
+      Email: {
+        // id: 'Bbwe',
+        email: subscriber.email
+      },
+      Indirizzo: {
+        // id: 'IFxf',
+        rich_text: [
+          {
+            text: { content: subscriber.address }
+          }
+        ]
+      },
+      'Nato/a a': {
+        // id: 'js%7Dj',
+        select: {
+          name: subscriber.birthPlace
+        }
+      },
+      'Provincia di Residenza': {
+        // id: '%3E%5E%3D%3C',
+        select: { name: subscriber.birthProvince }
+      },
+      'Provincia di Nascita': {
+        // id: '%3Fehm',
+        select: { name: subscriber.cityProvince }
+      },
+      'Residente in': {
+        // id: 'ATv%7D',
+        select: {
+          name: subscriber.city
+        }
+      },
+      Telefono: {
+        // id: 'NNIC',
+        phone_number: subscriber.phoneNr
+      },
+      'Tipologia Affiliazione': {
+        // id: '_%3Bj%3C',
+        select: {
+          // id: '_UJ`',
+          name: subscriber.membershipType
+        }
+      },
+      'Stato Pagamenti': {
+        // id: 'CohL',
+        type: 'select',
+        select: {
+          name: 'Non pagato'
+        }
+      },
+      'Stato Associativo': {
+        // id: 'x%3EU%3E',
+        select: {
+          name: 'Congelato'
+        }
+      }
     }
   })
   console.log(response)
