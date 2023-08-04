@@ -192,7 +192,7 @@ export default function MembershipForm({
   )
 }
 
-type FormField<T> = Exclude<T, 'type'> & {
+type FormField<T> = T & {
   label: string
   issues?: string[]
 }
