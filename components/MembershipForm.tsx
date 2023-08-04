@@ -123,13 +123,13 @@ export default function MembershipForm({
           maxLength: 15
         })}
       />
-      <SelectField label='Stato Pagamenti' {...register('paymentStatus')}>
+      {/* <SelectField label='Stato Pagamenti' {...register('paymentStatus')}>
         {['Pagato', 'Non pagato'].map((value, key) => (
           <option key={key} value={value}>
             {value}
           </option>
         ))}
-      </SelectField>
+      </SelectField> */}
       <BasicInputField
         type='text'
         label='CAP'
@@ -148,22 +148,22 @@ export default function MembershipForm({
         placeholder='Provincia residenza'
         {...register('cityProvince', { required: true, maxLength: 2 })}
       />
-      <SelectField label='Stato Associativo' {...register('membershipStatus')}>
+      {/* <SelectField label='Stato Associativo' {...register('membershipStatus')}>
         {['Attivo', 'Dismesso', 'Congelato'].map((value, key) => (
           <option key={key} value={value}>
             {value}
           </option>
         ))}
-      </SelectField>
+      </SelectField> */}
       <SelectField
         label='Tipologia Affiliazione'
         {...register('membershipType', { required: true })}
       >
         {[
+          'Socio Adulto Ordinario Annuale',
           'Socio Under18',
-          'Socio Onorario',
-          'Socio Sostenitore',
-          'Socio Adulto Ordinario Annuale'
+          'Socio Sostenitore'
+          // 'Socio Onorario',
         ].map((value, key) => (
           <option key={key} value={value}>
             {value}
