@@ -1,0 +1,19 @@
+.button {
+  display: var(--display, block);
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+  font: inherit;
+}
+
+.button:focus {
+  outline: 2px auto var(--color-primary);
+  outline-offset: 2px;
+}
+
+.button:focus:not(.focus-visible) {
+  outline: none;
+}

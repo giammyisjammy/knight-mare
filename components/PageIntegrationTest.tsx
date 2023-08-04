@@ -1,26 +1,14 @@
 import * as React from 'react'
 
-import { IoMoonSharp } from '@react-icons/all-files/io5/IoMoonSharp'
-import { IoSunnyOutline } from '@react-icons/all-files/io5/IoSunnyOutline'
-
 import { ThemedEmbed } from '@/components/ThemedEmbed'
 import { examples } from '@/lib/get-themed-lichess-url'
 import * as types from '@/lib/types'
-import { useDarkMode } from '@/lib/use-dark-mode'
 
 import styles from './styles.module.css'
+import DarkModeToggle from './DarkModeToggle'
 
 export default function IntegrationTestPage() {
   const [hasMounted, setHasMounted] = React.useState(false)
-  const { isDarkMode, toggleDarkMode } = useDarkMode()
-
-  const onToggleDarkMode = React.useCallback(
-    (e) => {
-      e.preventDefault()
-      toggleDarkMode()
-    },
-    [toggleDarkMode]
-  )
 
   React.useEffect(() => {
     setHasMounted(true)
@@ -30,17 +18,7 @@ export default function IntegrationTestPage() {
     <div className='notion notion-app'>
       <header>
         <div className={styles.settings}>
-          {hasMounted && (
-            <a
-              className={styles.toggleDarkMode}
-              href='#'
-              role='button'
-              onClick={onToggleDarkMode}
-              title='Toggle dark mode'
-            >
-              {isDarkMode ? <IoMoonSharp /> : <IoSunnyOutline />}
-            </a>
-          )}
+          {hasMounted && <DarkModeToggle />}
         </div>
       </header>
       <div

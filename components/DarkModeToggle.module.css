@@ -1,0 +1,20 @@
+.iconWrapper {
+  opacity: 0.7;
+  position: relative;
+  border-radius: 5px;
+  width: 40px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+@media (min-width: 768.02px) {
+  .iconWrapper:hover {
+    opacity: 1;
+  }
+}
+
+.moonOrSun {
+  position: relative;
+  overflow: visible;
+}

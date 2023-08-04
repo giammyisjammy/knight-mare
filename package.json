@@ -50,9 +50,11 @@
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.45.2",
     "react-notion-x": "^6.15.6",
+    "react-spring": "^9.7.2",
     "react-tweet-embed": "^2.0.0",
     "react-use": "^17.3.2",
-    "rss": "^1.2.2"
+    "rss": "^1.2.2",
+    "use-sound": "^4.0.1"
   },
   "devDependencies": {
     "@next/bundle-analyzer": "^12.3.1",
