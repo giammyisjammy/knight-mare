@@ -1,5 +1,5 @@
 import React from 'react'
-import { useSpring, useTrail, animated } from 'react-spring'
+import { animated, useSpring, useTrail } from 'react-spring'
 // import useSound from 'use-sound'
 
 import { usePrefersReducedMotion } from '@/lib/use-prefers-reduce-motion'

@@ -1,11 +1,12 @@
 import * as React from 'react'
 
-import MembershipForm from './MembershipForm'
 import { SubmitHandler } from 'react-hook-form'
 
 import { api } from '@/lib/config'
 import fetcher from '@/lib/fetcher'
 import { ClubMember } from '@/lib/ClubMember'
+
+import MembershipForm from './MembershipForm'
 
 export default function NewMembershipPage() {
   const onConfirm: SubmitHandler<ClubMember> = async (formData) => {

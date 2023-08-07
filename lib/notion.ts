@@ -3,6 +3,8 @@ import { mergeRecordMaps } from 'notion-utils'
 import pMap from 'p-map'
 import pMemoize from 'p-memoize'
 
+import { ClubMember } from '@/lib/ClubMember'
+
 import {
   isPreviewImageSupportEnabled,
   navigationLinks,
@@ -10,7 +12,6 @@ import {
 } from './config'
 import { notion, notionClient } from './notion-api'
 import { getPreviewImageMap } from './preview-images'
-import { ClubMember } from '@/lib/ClubMember'
 
 const getNavigationLinkPages = pMemoize(
   async (): Promise<ExtendedRecordMap[]> => {

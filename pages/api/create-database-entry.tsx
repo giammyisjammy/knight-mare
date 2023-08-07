@@ -1,6 +1,7 @@
+import { NextApiRequest, NextApiResponse } from 'next'
+
 import { ClubMember } from '@/lib/ClubMember'
 import { createDatabaseEntry } from '@/lib/notion'
-import { NextApiRequest, NextApiResponse } from 'next'
 
 // import { search } from '../../lib/notion'
 
