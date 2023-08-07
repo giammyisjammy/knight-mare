@@ -7,7 +7,7 @@
   "repository": "giammyisjammy/knight-mare",
   "license": "MIT",
   "engines": {
-    "node": ">=16"
+    "node": ">=18"
   },
   "scripts": {
     "dev": "next dev",
