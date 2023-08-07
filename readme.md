@@ -33,8 +33,8 @@ It uses Notion as a CMS, [react-notion-x](https://github.com/NotionX/react-notio
 
 ## Demos
 
-- [Default demo](https://nextjs-notion-starter-kit.transitivebullsh.it) - Deployed from the `main` branch
-- [My site](https://transitivebullsh.it) - Deployed from the `transitive-bullshit` branch
+- [Default demo](https://clubscacchicantu.it) - Deployed from the `main` branch
+- [My site](https://dev.clubscacchicantu.it) - Deployed from the `dev` branch
 
 ## Setup
 
@@ -44,13 +44,13 @@ This project requires a recent version of Node.js (we recommend >= 18).
 
 1. Fork / clone this repo
 2. Change a few values in [site.config.ts](./site.config.ts)
-3. `npm install`
-4. `npm run dev` to test locally
-5. `npm run deploy` to deploy to vercel 💪
+3. `pnpm install`
+4. `pnpm run dev` to test locally
+5. `pnpm run deploy` to deploy to vercel 💪
 
 I tried to make configuration as easy as possible — All you really need to do to get started is edit `rootNotionPageId`.
 
-We recommend duplicating the [default page](https://notion.so/7875426197cf461698809def95960ebf) as a starting point, but you can use any public notion page you want.
+We recommend duplicating the [original default page](https://notion.so/7875426197cf461698809def95960ebf) as a starting point, but you can use any public notion page you want.
 
 Make sure your root Notion page is **public** and then copy the link to your clipboard. Extract the last part of the URL that looks like `7875426197cf461698809def95960ebf`, which is your page's Notion ID.
 
