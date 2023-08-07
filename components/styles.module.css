@@ -105,6 +105,14 @@
   color: #c9510c;
 }
 
+.facebook:hover {
+  color: #0062e0;
+}
+
+.instagram:hover {
+  color: #dc2743;
+}
+
 .youtube:hover {
   color: #ff0000;
 }

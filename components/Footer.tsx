@@ -7,6 +7,8 @@ import { FaMastodon } from '@react-icons/all-files/fa/FaMastodon'
 import { FaTwitter } from '@react-icons/all-files/fa/FaTwitter'
 import { FaYoutube } from '@react-icons/all-files/fa/FaYoutube'
 import { FaZhihu } from '@react-icons/all-files/fa/FaZhihu'
+import { FaInstagram } from '@react-icons/all-files/fa/FaInstagram'
+import { FaFacebook } from '@react-icons/all-files/fa/FaFacebook'
 
 import * as config from '@/lib/config'
 
@@ -87,6 +89,30 @@ export const FooterImpl: React.FC = () => {
             rel='noopener noreferrer'
           >
             <FaLinkedin />
+          </a>
+        )}
+
+        {config.facebook && (
+          <a
+            className={styles.facebook}
+            href={`https://www.facebook.com/${config.facebook}`}
+            title={`Facebook ${config.author}`}
+            target='_blank'
+            rel='noopener noreferrer'
+          >
+            <FaFacebook />
+          </a>
+        )}
+
+        {config.instagram && (
+          <a
+            className={styles.instagram}
+            href={`https://www.instagram.com/${config.instagram}`}
+            title={`Instagram ${config.author}`}
+            target='_blank'
+            rel='noopener noreferrer'
+          >
+            <FaInstagram />
           </a>
         )}
 
