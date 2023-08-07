@@ -1,4 +1,8 @@
-![knight-mare](https://github.com/giammyisjammy/knight-mare/assets/49064602/118cd2a1-a3cf-4a5d-9dc5-509a76b43ca6)
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://github.com/giammyisjammy/knight-mare/assets/49064602/60bb443b-5622-4b68-b844-a779bca98786">
+  <source media="(prefers-color-scheme: light)" srcset="https://github.com/giammyisjammy/knight-mare/assets/49064602/118cd2a1-a3cf-4a5d-9dc5-509a76b43ca6">
+  <img alt="Shows a black logo in light color mode and a white one in dark color mode." src="https://user-images.githubusercontent.com/25423296/163456779-a8556205-d0a5-45e2-ac17-42d089e3c3f8.png">
+</picture>
 
 # Knight Mare
 
