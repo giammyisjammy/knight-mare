@@ -1,8 +1,4 @@
-<p align="center">
-  <a href="https://transitivebullsh.it/nextjs-notion-starter-kit">
-    <img alt="Example article page" src="https://user-images.githubusercontent.com/552829/160132094-12875e09-41ec-450a-80fc-ae8cd488129d.jpg" width="689">
-  </a>
-</p>
+![knight-mare](https://github.com/giammyisjammy/knight-mare/assets/49064602/118cd2a1-a3cf-4a5d-9dc5-509a76b43ca6)
 
 # Knight Mare
 
