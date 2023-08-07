@@ -12,7 +12,6 @@ jobs:
           version: 6.32.9
       - uses: actions/setup-node@v3
         with:
-          node-version: 18
           node-version-file: 'package.json'
           cache: pnpm
 
