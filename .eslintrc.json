@@ -7,11 +7,18 @@
     "plugin:@typescript-eslint/recommended",
     "plugin:react/recommended",
     "plugin:react-hooks/recommended",
+    "plugin:@next/next/recommended",
+    "plugin:import/recommended",
     "prettier"
   ],
   "settings": {
     "react": {
       "version": "detect"
+    },
+    "import/resolver": {
+      "typescript": {
+        "alwaysTryTypes": true
+      }
     }
   },
   "env": {
@@ -22,6 +29,48 @@
     "@typescript-eslint/no-explicit-any": 0,
     "@typescript-eslint/no-non-null-assertion": 0,
     "@typescript-eslint/no-unused-vars": 2,
-    "react/prop-types": 0
+    "react/prop-types": 0,
+    "sort-imports": [
+      "warn",
+      {
+        "ignoreCase": true,
+        "ignoreDeclarationSort": true,
+        "ignoreMemberSort": true
+      }
+    ],
+    "import/no-unresolved": [2, { "ignore": ["\\.(scss|less|css)$"] }],
+    "import/order": [
+      "warn",
+      {
+        "groups": [
+          "builtin",
+          "external",
+          "internal",
+          "parent",
+          "sibling",
+          "index"
+        ],
+        "newlines-between": "always-and-inside-groups",
+        "distinctGroup": true,
+        "pathGroupsExcludedImportTypes": [
+          "builtin",
+          "^(react/(.*)$)|^(react$)|^(next/(.*)$)|^(next$)",
+          "external",
+          "object"
+        ],
+        "pathGroups": [
+          {
+            "pattern": "^(react/(.*)$)|^(react$)|^(next/(.*)$)|^(next$)",
+            "group": "builtin",
+            "position": "before"
+          },
+          {
+            "pattern": "^(@/lib/(.*)$)|^(@/components/(.*)$)|^(@/styles/(.*)$",
+            "group": "internal",
+            "position": "after"
+          }
+        ]
+      }
+    ]
   }
 }
