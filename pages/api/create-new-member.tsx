@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 
 import { ClubMember } from '@/lib/ClubMember'
-import { createDatabaseEntry } from '@/lib/notion'
+import { createRegisterOfMemberEntry } from '@/lib/notion'
 
 // import { search } from '../../lib/notion'
 
@@ -13,10 +13,10 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
   try {
     console.log('<<< typeof body', typeof req.body)
-    const subscriber = ClubMember.deserialize(JSON.parse(req.body))
-    console.log('<<< lambda create-database-entry', subscriber)
+    const newClubMember = ClubMember.deserialize(JSON.parse(req.body))
+    console.log('<<< lambda create-database-entry', newClubMember)
 
-    const results = await createDatabaseEntry(subscriber)
+    const results = await createRegisterOfMemberEntry(newClubMember)
     console.log('>>> lambda create-database-entry', results)
 
     res.status(200).json({ ok: true })

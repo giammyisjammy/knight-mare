@@ -12,7 +12,7 @@ export default function NewMembershipPage() {
   const onConfirm: SubmitHandler<ClubMember> = async (formData) => {
     console.log('New subscription', formData)
     try {
-      const result = await fetcher(api.createDatabaseEntry, {
+      const result = await fetcher(api.createNewMember, {
         method: 'POST',
         body: JSON.stringify(formData.serialize())
       })

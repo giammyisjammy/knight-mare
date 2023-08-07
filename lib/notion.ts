@@ -8,7 +8,8 @@ import { ClubMember } from '@/lib/ClubMember'
 import {
   isPreviewImageSupportEnabled,
   navigationLinks,
-  navigationStyle
+  navigationStyle,
+  registerOfMembersDatabaseId
 } from './config'
 import { notion, notionClient } from './notion-api'
 import { getPreviewImageMap } from './preview-images'
@@ -69,9 +70,7 @@ export async function search(params: SearchParams): Promise<SearchResults> {
   return notion.search(params)
 }
 
-export async function createDatabaseEntry(subscriber: ClubMember) {
-  // If the new page is a child of an existing database, the keys of the properties object body param must match the parent database's properties.
-  const database_id = process.env.NOTION_DATABASE_ID
+export async function createRegisterOfMemberEntry(newClubMember: ClubMember) {
   const response = await notionClient.pages.create({
     // cover: {
     //   type: 'external',
@@ -85,14 +84,14 @@ export async function createDatabaseEntry(subscriber: ClubMember) {
     // },
     parent: {
       type: 'database_id',
-      database_id
+      database_id: registerOfMembersDatabaseId
     },
     properties: {
       'Nome e Cognome': {
         title: [
           {
             text: {
-              content: subscriber.fullName
+              content: newClubMember.fullName
             }
           }
         ]
@@ -101,7 +100,7 @@ export async function createDatabaseEntry(subscriber: ClubMember) {
         // id: 'vjFZ',
         rich_text: [
           {
-            text: { content: subscriber.CAP }
+            text: { content: newClubMember.CAP }
           }
         ]
       },
@@ -109,63 +108,63 @@ export async function createDatabaseEntry(subscriber: ClubMember) {
         // id: 'qve%3B',
         rich_text: [
           {
-            text: { content: subscriber.fiscalCode }
+            text: { content: newClubMember.fiscalCode }
           }
         ]
       },
       'Consenso Privacy': {
         // id: 'UNGT',
-        checkbox: subscriber.privacyConsent
+        checkbox: newClubMember.privacyConsent
       },
       'Consenso Trattamento Immagini': {
         // id: 'yz%5Bs',
-        checkbox: subscriber.imagesConsent
+        checkbox: newClubMember.imagesConsent
       },
       'Data di Nascita': {
         // id: 'FkdU',
-        date: { start: subscriber.birthDate.toISOString() }
+        date: { start: newClubMember.birthDate.toISOString() }
       },
       Email: {
         // id: 'Bbwe',
-        email: subscriber.email
+        email: newClubMember.email
       },
       Indirizzo: {
         // id: 'IFxf',
         rich_text: [
           {
-            text: { content: subscriber.address }
+            text: { content: newClubMember.address }
           }
         ]
       },
       'Nato/a a': {
         // id: 'js%7Dj',
         select: {
-          name: subscriber.birthPlace
+          name: newClubMember.birthPlace
         }
       },
       'Provincia di Residenza': {
         // id: '%3E%5E%3D%3C',
-        select: { name: subscriber.birthProvince }
+        select: { name: newClubMember.birthProvince }
       },
       'Provincia di Nascita': {
         // id: '%3Fehm',
-        select: { name: subscriber.cityProvince }
+        select: { name: newClubMember.cityProvince }
       },
       'Residente in': {
         // id: 'ATv%7D',
         select: {
-          name: subscriber.city
+          name: newClubMember.city
         }
       },
       Telefono: {
         // id: 'NNIC',
-        phone_number: subscriber.phoneNr
+        phone_number: newClubMember.phoneNr
       },
       'Tipologia Affiliazione': {
         // id: '_%3Bj%3C',
         select: {
           // id: '_UJ`',
-          name: subscriber.membershipType
+          name: newClubMember.membershipType
         }
       },
       'Stato Pagamenti': {
