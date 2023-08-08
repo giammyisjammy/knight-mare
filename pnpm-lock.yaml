@@ -9,8 +9,8 @@ dependencies:
     specifier: ^2.4.0
     version: 2.4.0(react@18.2.0)
   '@keyvhq/core':
-    specifier: ^1.6.9
-    version: 1.6.26
+    specifier: ^2.0.0
+    version: 2.0.0
   '@keyvhq/redis':
     specifier: ^1.6.10
     version: 1.6.28
@@ -1878,9 +1878,9 @@ packages:
       '@jridgewell/resolve-uri': 3.1.0
       '@jridgewell/sourcemap-codec': 1.4.14
 
-  /@keyvhq/core@1.6.26:
-    resolution: {integrity: sha512-0jy/fOVCYdo3MImM3yjdHuFZNkycPmEAq0v+UGt0dRltnXccgQ+7vCdCNbLpgP3688g5Mw8L+0vcRt5MK53UPA==}
-    engines: {node: '>= 14'}
+  /@keyvhq/core@2.0.0:
+    resolution: {integrity: sha512-fi3+F7GNImn1j4r6UFhsHRwN8a05uhUlrbNWZgnkX0h1NzcBEPNNqqMOE4KSASJwH2e9Eh/jm+bEfto58csNgg==}
+    engines: {node: '>= 16'}
     dependencies:
       json-buffer: 3.0.1
     dev: false
