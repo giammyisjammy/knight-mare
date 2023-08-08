@@ -93,6 +93,24 @@
   border-color: #0077b5;
 }
 
+.facebook .actionBgPane {
+  background: linear-gradient(0deg, #0062e0 0%, #19afff 100%);
+}
+.facebook:hover {
+  border-color: #0062e0;
+}
+
+.instagram .actionBgPane {
+  background: linear-gradient(
+    45deg,
+    #f09433 0%,
+    #e6683c 25%,
+    #dc2743 50%,
+    #cc2366 75%,
+    #bc1888 100%
+  );
+}
+
 .github .actionBgPane {
   background: #c9510c;
 }
@@ -101,10 +119,10 @@
 }
 
 .youtube .actionBgPane {
-  background: #FF0000;
+  background: #ff0000;
 }
 .youtube:hover {
-  border-color: #FF0000;
+  border-color: #ff0000;
 }
 
 .medium .actionBgPane {

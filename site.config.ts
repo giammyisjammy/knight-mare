@@ -2,7 +2,7 @@ import { siteConfig } from './lib/site-config'
 
 export default siteConfig({
   // the site's root Notion page (required)
-  rootNotionPageId: '797d871e0e2143fa90a691632d7a54ca',
+  rootNotionPageId: '60144bafb6674c039661c3b2ae8a2ec2',
 
   // if you want to restrict pages to a single notion workspace (optional)
   // (this should be a Notion ID; see the docs for how to extract this)
@@ -15,7 +15,7 @@ export default siteConfig({
   author: 'Circolo Scacchi Cantù',
 
   // open graph metadata (optional)
-  description: 'Circolo Scacchi Cantù Starter Kit Site',
+  description: 'Circolo Scacchi Cantù Site',
 
   // social usernames (optional)
   // twitter: '',
@@ -24,6 +24,8 @@ export default siteConfig({
   // mastodon: '#', // optional mastodon profile URL, provides link verification
   // newsletter: '#', // optional newsletter URL
   // youtube: '#', // optional youtube channel name or `channel/UCGbXXXXXXXXXXXXXXXXXXXXXX`
+  instagram: 'csc_cantu',
+  facebook: 'circoloscacchicantu',
 
   // default notion icon and cover images for site-wide consistency (optional)
   // page-specific values will override these site-wide defaults

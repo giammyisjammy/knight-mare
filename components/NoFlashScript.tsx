@@ -54,6 +54,5 @@ export const NoFlashScript = () => {
 
   // calledFunction = Terser.minify(calledFunction).code
 
-  // eslint-disable-next-line react/no-danger
   return <script dangerouslySetInnerHTML={{ __html: calledFunction }} />
 }

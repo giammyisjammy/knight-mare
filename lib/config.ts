@@ -61,6 +61,8 @@ export const youtube: string | null = getSiteConfig('youtube', null)
 export const linkedin: string | null = getSiteConfig('linkedin', null)
 export const newsletter: string | null = getSiteConfig('newsletter', null)
 export const zhihu: string | null = getSiteConfig('zhihu', null)
+export const instagram: string | null = getSiteConfig('instagram', null)
+export const facebook: string | null = getSiteConfig('facebook', null)
 
 export const getMastodonHandle = (): string | null => {
   if (!mastodon) {
@@ -132,6 +134,11 @@ export const redisNamespace: string | null = getEnv(
   'preview-images'
 )
 
+export const registerOfMembersDatabaseId = getEnv(
+  'NOTION_REGISTER_OF_MEMBERS_DATABASE_ID',
+  null
+)
+
 // ----------------------------------------------------------------------------
 
 export const isServer = typeof window === 'undefined'
@@ -148,7 +155,7 @@ export const api = {
   searchNotion: `${apiBaseUrl}/search-notion`,
   getNotionPageInfo: `${apiBaseUrl}/notion-page-info`,
   getSocialImage: `${apiBaseUrl}/social-image`,
-  createDatabaseEntry: `${apiBaseUrl}/create-database-entry`
+  createNewMember: `${apiBaseUrl}/create-new-member`
 }
 
 // ----------------------------------------------------------------------------

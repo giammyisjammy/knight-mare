@@ -1,6 +1,7 @@
 import React from 'react'
-import styles from './UnstyledButton.module.css'
 import cs from 'classnames'
+
+import styles from './UnstyledButton.module.css'
 
 // Utility type to define css variables in style attribute
 // see https://stackoverflow.com/a/65959390

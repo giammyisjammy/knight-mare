@@ -1,7 +1,9 @@
 import * as React from 'react'
-// import VisuallyHidden from './VisuallyHidden'
 import { useForm, SubmitHandler, SubmitErrorHandler } from 'react-hook-form'
+
 import { ClubMember } from '@/lib/ClubMember'
+
+// import VisuallyHidden from './VisuallyHidden'
 
 type Props =
   | {

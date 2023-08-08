@@ -1,18 +1,18 @@
-<p align="center">
-  <a href="https://transitivebullsh.it/nextjs-notion-starter-kit">
-    <img alt="Example article page" src="https://user-images.githubusercontent.com/552829/160132094-12875e09-41ec-450a-80fc-ae8cd488129d.jpg" width="689">
-  </a>
-</p>
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://github.com/giammyisjammy/knight-mare/assets/49064602/60bb443b-5622-4b68-b844-a779bca98786">
+  <source media="(prefers-color-scheme: light)" srcset="https://github.com/giammyisjammy/knight-mare/assets/49064602/118cd2a1-a3cf-4a5d-9dc5-509a76b43ca6">
+  <img alt="Shows a black logo in light color mode and a white one in dark color mode." src="https://user-images.githubusercontent.com/25423296/163456779-a8556205-d0a5-45e2-ac17-42d089e3c3f8.png">
+</picture>
 
-# Next.js Notion Starter Kit
+# Knight Mare
 
-> The perfect starter kit for building websites with Next.js and Notion.
+> The platform for Cantù Chess Club websites with Next.js and Notion.
 
-[![Build Status](https://github.com/transitive-bullshit/nextjs-notion-starter-kit/actions/workflows/build.yml/badge.svg)](https://github.com/transitive-bullshit/nextjs-notion-starter-kit/actions/workflows/build.yml) [![Prettier Code Formatting](https://img.shields.io/badge/code_style-prettier-brightgreen.svg)](https://prettier.io)
+[![Build Status](https://github.com/giammyisjammy/knight-mare/actions/workflows/build.yml/badge.svg)](https://github.com/giammyisjammy/knight-mare/actions/workflows/build.yml) [![Prettier Code Formatting](https://img.shields.io/badge/code_style-prettier-brightgreen.svg)](https://prettier.io)
 
 ## Intro
 
-This repo is what I use to power my personal blog and portfolio site [transitivebullsh.it](https://transitivebullsh.it).
+This repo is what I use to power the website [circoloscacchicantu.it](https://circoloscacchicantu.it).
 
 It uses Notion as a CMS, [react-notion-x](https://github.com/NotionX/react-notion-x), [Next.js](https://nextjs.org/), and [Vercel](https://vercel.com).
 
@@ -33,8 +33,8 @@ It uses Notion as a CMS, [react-notion-x](https://github.com/NotionX/react-notio
 
 ## Demos
 
-- [Default demo](https://nextjs-notion-starter-kit.transitivebullsh.it) - Deployed from the `main` branch
-- [My site](https://transitivebullsh.it) - Deployed from the `transitive-bullshit` branch
+- [Default demo](https://clubscacchicantu.it) - Deployed from the `main` branch
+- [My site](https://dev.clubscacchicantu.it) - Deployed from the `dev` branch
 
 ## Setup
 
@@ -44,13 +44,13 @@ This project requires a recent version of Node.js (we recommend >= 18).
 
 1. Fork / clone this repo
 2. Change a few values in [site.config.ts](./site.config.ts)
-3. `npm install`
-4. `npm run dev` to test locally
-5. `npm run deploy` to deploy to vercel 💪
+3. `pnpm install`
+4. `pnpm run dev` to test locally
+5. `pnpm run deploy` to deploy to vercel 💪
 
 I tried to make configuration as easy as possible — All you really need to do to get started is edit `rootNotionPageId`.
 
-We recommend duplicating the [default page](https://notion.so/7875426197cf461698809def95960ebf) as a starting point, but you can use any public notion page you want.
+We recommend duplicating the [original default page](https://notion.so/7875426197cf461698809def95960ebf) as a starting point, but you can use any public notion page you want.
 
 Make sure your root Notion page is **public** and then copy the link to your clipboard. Extract the last part of the URL that looks like `7875426197cf461698809def95960ebf`, which is your page's Notion ID.
 

@@ -284,7 +284,7 @@ export const NotionPage: React.FC<types.PageProps> = ({
         footer={footer}
       />
 
-      <GitHubShareButton />
+      {process.env.NODE_ENV !== 'production' && <GitHubShareButton />}
     </>
   )
 }
