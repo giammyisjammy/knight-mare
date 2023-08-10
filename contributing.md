@@ -4,20 +4,20 @@ Suggestions and pull requests are highly encouraged. Have a look at the [open is
 
 ## Development
 
-To develop the project locally, you'll need a recent version of Node.js and `pnpm` installed globally.
+To develop the project locally, you'll need a recent version of Node.js and `yarn` installed globally.
 
-To get started, clone the repo and run `pnpm` from the root directory:
+To get started, clone the repo and run `yarn` from the root directory:
 
 ```bash
 git clone https://github.com/transitive-bullshit/nextjs-notion-starter-kit
 cd nextjs-notion-starter-kit
-pnpm install
+yarn
 ```
 
 Now that your dependencies are installed, you can run the local Next.js dev server:
 
 ```bash
-pnpm dev
+yarn dev
 ```
 
 You should now be able to open `http://localhost:3000` to view the webapp.
@@ -27,7 +27,7 @@ You should now be able to open `http://localhost:3000` to view the webapp.
 To build for production, you can run:
 
 ```bash
-pnpm build
+yarn build
 ```
 
 Which just runs `next build` under the hood.
@@ -36,25 +36,25 @@ Which just runs `next build` under the hood.
 
 If you are making changes to `react-notion-x` and want to test them out with `nextjs-notion-starter-kit`, you'll first need to [set up and build `react-notion-x` locally](https://github.com/NotionX/react-notion-x/blob/master/contributing.md).
 
-Once you have `react-notion-x` set up locally, run `pnpm link` from each `react-notion-x` package:
+Once you have `react-notion-x` set up locally, run `yarn link` from each `react-notion-x` package:
 
 ```bash
 # from react-notion-x clone
 cd packages/react-notion-x
-pnpm link
+yarn link
 cd ../packages/notion-utils
-pnpm link
+yarn link
 cd ../packages/notion-types
-pnpm link
+yarn link
 cd ../packages/notion-client
-pnpm link
+yarn link
 ```
 
 Now you can link these local deps into `nextjs-notion-starter-kit`:
 
 ```bash
 # from nextjs-notion-starter-kit
-pnpm deps:link
+yarn deps:link
 ```
 
 The last step is to make sure that the Next.js project and these local dependencies are all pointing to the same versions of `react` and `react-dom`.
@@ -62,22 +62,22 @@ The last step is to make sure that the Next.js project and these local dependenc
 ```bash
 # from react-notion-x clone
 cd node_modules/react
-pnpm link
+yarn link
 cd ../react-dom
-pnpm link
+yarn link
 ```
 
 ```bash
 # from nextjs-notion-starter-kit
-pnpm link react react-dom
+yarn link react react-dom
 ```
 
-With this setup, in one tab, you can run `pnpm dev` to keep `react-notion-x` up-to-date, and in another tab, you can run `pnpm dev` to keep `nextjs-notion-starter-kit` up-to-date.
+With this setup, in one tab, you can run `yarn dev` to keep `react-notion-x` up-to-date, and in another tab, you can run `yarn dev` to keep `nextjs-notion-starter-kit` up-to-date.
 
 ### Gotchas
 
-Whenever you make a change to one of the `react-notion-x` packages, it will automatically be recompiled into its respective `build` folder, and the `pnpm dev` from `nextjs-notion-starter-kit` should hot-reload it in the browser.
+Whenever you make a change to one of the `react-notion-x` packages, it will automatically be recompiled into its respective `build` folder, and the `yarn dev` from `nextjs-notion-starter-kit` should hot-reload it in the browser.
 
-Sometimes, this process gets a little out of whack, and if you're not sure what's going on, I usually just quit one or both of the `pnpm dev` commands and restart them.
+Sometimes, this process gets a little out of whack, and if you're not sure what's going on, I usually just quit one or both of the `yarn dev` commands and restart them.
 
-If you're seeing something unexpected while debugging with Next.js, try running `rm -rf .next` to refresh the Next.js cache before running `pnpm dev` again.
+If you're seeing something unexpected while debugging with Next.js, try running `rm -rf .next` to refresh the Next.js cache before running `yarn dev` again.
