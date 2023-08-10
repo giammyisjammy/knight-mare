@@ -6,8 +6,8 @@ import { Breadcrumbs, Header, Search, useNotionContext } from 'react-notion-x'
 
 import { isSearchEnabled, navigationLinks, navigationStyle } from '@/lib/config'
 
-import styles from './styles.module.css'
 import DarkModeToggle from './DarkModeToggle'
+import styles from './styles.module.css'
 
 export const NotionPageHeader: React.FC<{
   block: types.CollectionViewPageBlock | types.PageBlock
@@ -54,7 +54,7 @@ export const NotionPageHeader: React.FC<{
             })
             .filter(Boolean)}
 
-          <DarkModeToggle />
+          <DarkModeToggle size={14} />
 
           {isSearchEnabled && <Search block={block} title={null} />}
         </div>
