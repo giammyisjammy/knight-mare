@@ -55,6 +55,7 @@ const MembershipFormProvider: React.FC<{
 
 type Props =
   | {
+    className?: string
       onConfirm: SubmitHandler<ClubMember | undefined> // HACK should be just undefined
       onInvalid?: SubmitErrorHandler<ClubMember>
     } & (
@@ -68,6 +69,7 @@ type Props =
         }
     )
 export default function MembershipForm({
+  className,
   onConfirm,
   onInvalid,
   mode,
@@ -79,7 +81,7 @@ export default function MembershipForm({
     <MembershipFormProvider defaultValues={defaultValues}>
       {({ register, handleSubmit })=>
         <form
-        className='notion-page-content'
+          className={className}
           onSubmit={handleSubmit(
             // HACK
             (formData: ClubMember) => {
@@ -108,8 +110,8 @@ export default function MembershipForm({
               )
             },
             onInvalid
-            )}
-            >
+          )}
+        >
           <div className={styles.container}>
             <InputField
               label='Nome'
