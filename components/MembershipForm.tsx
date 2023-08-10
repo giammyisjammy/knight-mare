@@ -1,9 +1,57 @@
 import * as React from 'react'
-import { useForm, SubmitHandler, SubmitErrorHandler } from 'react-hook-form'
+import { useForm,
+  SubmitHandler,
+  SubmitErrorHandler,
+  FormProvider,
+  UseFormReturn,
+  useFormContext,
+  PathString
+} from 'react-hook-form'
+import cs from 'classnames'
+import { ErrorMessage } from "@hookform/error-message";
 
 import { ClubMember } from '@/lib/ClubMember'
 
+import styles from './MembershipForm.module.css'
+
 // import VisuallyHidden from './VisuallyHidden'
+
+const validators = {
+  required: (message = 'This is required.') => ({
+    required: message
+  }),
+  minLength: (value: number, message = `This should be at least ${value} length.` ) => ({
+    minLength:{ value, message }
+  }),
+  maxLength: (value: number, message = `This should be at most ${value} length.`) => ({
+    maxLength:{ value, message }
+  }),
+  email: (message = 'Not a valid email.') => ({
+    pattern: { value: /^\S+@\S+$/i, message }
+  }),
+  fiscalCode: (message = 'Not a valid fiscal code.') => ({
+    pattern: {
+      value: /^([A-Z]{6}[0-9LMNPQRSTUV]{2}[ABCDEHLMPRST]{1}[0-9LMNPQRSTUV]{2}[A-Z]{1}[0-9LMNPQRSTUV]{3}[A-Z]{1})$|([0-9]{11})$/i,
+      message
+    }
+  }),
+  CAP: (message = 'Not a valid CAP code.') => ({
+    pattern: { value: /^(V-|I-)?[0-9]{5}$/i, message }
+  })
+}
+
+const MembershipFormProvider: React.FC<{
+  defaultValues?: ClubMember
+  children: (methods: UseFormReturn<ClubMember, any, undefined>) => React.ReactNode;
+}> = ({defaultValues, children}) => {
+  const methods = useForm<ClubMember>({ defaultValues })
+
+  console.log(methods.formState.errors)
+
+  return <FormProvider {...methods}>
+    {children(methods)}
+  </FormProvider>
+}
 
 type Props =
   | {
@@ -27,216 +75,181 @@ export default function MembershipForm({
 }: Props) {
   const defaultValues = mode === 'edit' ? memberInfo : new ClubMember()
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors }
-  } = useForm<ClubMember>({ defaultValues })
-  console.log(errors)
-
   return (
-    <form
-      onSubmit={handleSubmit(
-        // HACK
-        (formData: ClubMember) => {
-          onConfirm(
-            new ClubMember(
-              formData.firstName,
-              formData.lastName,
-              formData.paymentStatus,
-              formData.CAP,
-              formData.fiscalCode,
-              formData.privacyConsent,
-              formData.imagesConsent,
-              formData.creationDate,
-              new Date(formData.birthDate),
-              formData.email,
-              formData.address,
-              formData.birthPlace,
-              formData.birthProvince,
-              formData.cityProvince,
-              formData.city,
-              formData.membershipStatus,
-              formData.phoneNr,
-              formData.membershipType,
-              formData.lastEdit
-            )
-          )
-        },
-        onInvalid
-      )}
-    >
-      <h1>Personal information</h1>
-      <p>Type your personal information here</p>
-      <BasicInputField
-        type='text'
-        label='Nome'
-        placeholder='Nome'
-        {...register('firstName', { required: true, maxLength: 80 })}
-      />
-      <BasicInputField
-        type='text'
-        label='Cognome'
-        placeholder='Cognome'
-        {...register('lastName', { required: true, maxLength: 100 })}
-      />
-      <BasicInputField
-        type='text'
-        label='Codice Fiscale'
-        placeholder='Codice Fiscale'
-        {...register('fiscalCode', {
-          required: true,
-          pattern:
-            /^([A-Z]{6}[0-9LMNPQRSTUV]{2}[ABCDEHLMPRST]{1}[0-9LMNPQRSTUV]{2}[A-Z]{1}[0-9LMNPQRSTUV]{3}[A-Z]{1})$|([0-9]{11})$/i
-        })}
-      />
-      <BasicInputField
-        type='text'
-        label='Email'
-        placeholder='Email'
-        {...register('email', { required: true, pattern: /^\S+@\S+$/i })}
-      />
-
-      <BasicInputField
-        type='text'
-        label='Indirizzo'
-        placeholder='Indirizzo'
-        {...register('address', { required: true })}
-      />
-      <BasicInputField
-        type='text'
-        label='Nato/a a'
-        placeholder='Nato/a a'
-        {...register('birthPlace', {})}
-      />
-      <BasicInputField
-        type='text'
-        label='Residente in'
-        placeholder='Residente in'
-        {...register('city', {})}
-      />
-      <BasicInputField
-        label='Telefono'
-        type='tel'
-        placeholder='000-000-0000'
-        {...register('phoneNr', {
-          required: true,
-          minLength: 6,
-          maxLength: 15
-        })}
-      />
-      {/* <SelectField label='Stato Pagamenti' {...register('paymentStatus')}>
-        {['Pagato', 'Non pagato'].map((value, key) => (
-          <option key={key} value={value}>
-            {value}
-          </option>
-        ))}
-      </SelectField> */}
-      <BasicInputField
-        type='text'
-        label='CAP'
-        placeholder='CAP'
-        {...register('CAP', { required: true, pattern: /^(V-|I-)?[0-9]{5}$/i })}
-      />
-      <BasicInputField
-        type='text'
-        label='Provincia di Nascita'
-        placeholder='Provincia di Nascita'
-        {...register('birthProvince', { required: true, maxLength: 2 })}
-      />
-      <BasicInputField
-        type='text'
-        label='Provincia di Residenza'
-        placeholder='Provincia residenza'
-        {...register('cityProvince', { required: true, maxLength: 2 })}
-      />
-      {/* <SelectField label='Stato Associativo' {...register('membershipStatus')}>
-        {['Attivo', 'Dismesso', 'Congelato'].map((value, key) => (
-          <option key={key} value={value}>
-            {value}
-          </option>
-        ))}
-      </SelectField> */}
-      <SelectField
-        label='Tipologia Affiliazione'
-        {...register('membershipType', { required: true })}
-      >
-        {[
-          'Socio Adulto Ordinario Annuale',
-          'Socio Under18',
-          'Socio Sostenitore'
-          // 'Socio Onorario',
-        ].map((value, key) => (
-          <option key={key} value={value}>
-            {value}
-          </option>
-        ))}
-      </SelectField>
-      <BasicInputField
-        label='Data di Nascita'
-        type='datetime-local'
-        {...register('birthDate', { required: true })}
-      />
-      <BasicInputField
-        type='checkbox'
-        label='Consenso Privacy'
-        placeholder='Consenso Privacy'
-        {...register('privacyConsent', { required: true })}
-      />
-      <BasicInputField
-        type='checkbox'
-        label='Consenso Trattamento Immagini'
-        placeholder='Consenso Trattamento Immagini'
-        {...register('imagesConsent', {})}
-      />
-      <input type='submit' />
-    </form>
+    <MembershipFormProvider defaultValues={defaultValues}>
+      {({ register, handleSubmit })=>
+        <form
+        className='notion-page-content'
+          onSubmit={handleSubmit(
+            // HACK
+            (formData: ClubMember) => {
+              onConfirm(
+                new ClubMember(
+                  formData.firstName,
+                  formData.lastName,
+                  formData.paymentStatus,
+                  formData.CAP,
+                  formData.fiscalCode,
+                  formData.privacyConsent,
+                  formData.imagesConsent,
+                  formData.creationDate,
+                  new Date(formData.birthDate),
+                  formData.email,
+                  formData.address,
+                  formData.birthPlace,
+                  formData.birthProvince,
+                  formData.cityProvince,
+                  formData.city,
+                  formData.membershipStatus,
+                  formData.phoneNr,
+                  formData.membershipType,
+                  formData.lastEdit
+                )
+              )
+            },
+            onInvalid
+            )}
+            >
+          <div className={styles.container}>
+            <InputField
+              label='Nome'
+              placeholder='Nome'
+              {...register('firstName', { ...validators.required(), ...validators.maxLength(80) })}
+            />
+            <InputField
+              label='Cognome'
+              placeholder='Cognome'
+              {...register('lastName', { ...validators.required(), ...validators.maxLength(100) })}
+            />
+            <InputField
+              label='Codice Fiscale'
+              placeholder='Codice Fiscale'
+              {...register('fiscalCode', { ...validators.required(), ...validators.fiscalCode() })}
+            />
+            <InputField
+              label='Email'
+              placeholder='Email'
+              {...register('email', { ...validators.required(), ...validators.email() })}
+            />
+            <InputField
+              label='Indirizzo'
+              placeholder='Indirizzo'
+              {...register('address', { ...validators.required() })}
+            />
+            <InputField
+              label='Nato/a a'
+              placeholder='Nato/a a'
+              {...register('birthPlace', { ...validators.required() })}
+            />
+            <InputField
+              label='Residente in'
+              placeholder='Residente in'
+              {...register('city', { ...validators.required() })}
+            />
+            <InputField
+              type='tel'
+              label='Telefono'
+              placeholder='000-000-0000'
+              {...register('phoneNr', {
+                ...validators.required(),
+                ...validators.minLength(6),
+                ...validators.maxLength(15)
+              })}
+            />
+            <InputField
+              label='CAP'
+              placeholder='CAP'
+              {...register('CAP', { ...validators.required(), ...validators.CAP() })}
+            />
+            <InputField
+              label='Provincia di Nascita'
+              placeholder='Provincia di Nascita'
+              {...register('birthProvince', { ...validators.required(), ...validators.maxLength(2) })}
+            />
+            <InputField
+              label='Provincia di Residenza'
+              placeholder='Provincia residenza'
+              {...register('cityProvince', { ...validators.required(), ...validators.maxLength(2) })}
+            />
+            <SelectField
+              label='Tipologia Affiliazione'
+              {...register('membershipType', { ...validators.required() })}
+            >
+              {[
+                'Socio Adulto Ordinario Annuale',
+                'Socio Under18',
+                'Socio Sostenitore'
+                // 'Socio Onorario',
+              ].map((value, key) => (
+                <option key={key} value={value}>
+                  {value}
+                </option>
+              ))}
+            </SelectField>
+            <InputField
+              type='datetime-local'
+              label='Data di Nascita'
+              {...register('birthDate', { ...validators.required() })}
+            />
+            <InputField
+              type='checkbox'
+              label='Consenso Privacy'
+              placeholder='Consenso Privacy'
+              {...register('privacyConsent', { ...validators.required() })}
+            />
+            <InputField
+              type='checkbox'
+              label='Consenso Trattamento Immagini'
+              placeholder='Consenso Trattamento Immagini'
+              {...register('imagesConsent', { ...validators.required() })}
+            />
+            <div className={styles.actions}>
+              <input type='submit' />
+            </div>
+          </div>
+        </form>
+      }
+    </MembershipFormProvider>
   )
 }
 
 type FormField<T> = T & {
-  label: string
-  issues?: string[]
+  label: PathString
 }
 
-type BasicInputFieldProps = FormField<
+type InputFieldProps = FormField<
   React.InputHTMLAttributes<HTMLInputElement>
 >
-const BasicInputField = React.forwardRef<
+const InputField = React.forwardRef<
   HTMLInputElement,
-  BasicInputFieldProps
->(({ label, issues, ...props }, ref) => {
+  InputFieldProps
+>(({ label, ...props }, ref) => {
+  const { formState: { errors } } = useFormContext()
+
   return (
-    <div>
-      {props.type === 'checkbox' && <input {...props} ref={ref} />}
-      <label>{label}</label>
+    <div className={cs(styles.field, { [styles.checkboxField]: props.type === 'checkbox' })}>
+      <label className={cs({[styles.errorLabel] : !!errors[props.name] })}>{label}</label>
       {/* <VisuallyHidden>{label}</VisuallyHidden> */}
-      {props.type !== 'checkbox' && <input {...props} ref={ref} />}
-      <ul>
-        {issues?.map((issue) => (
-          <li key={`${props.name}_${issue}`}>{issue}</li>
-        ))}
-      </ul>
+      <input {...props} ref={ref} />
+      <ErrorMessage as="span" className={styles.errorMessage} name={props.name} errors={errors}/>
     </div>
   )
 })
-BasicInputField.displayName = 'BasicInputField'
+InputField.displayName = 'InputField'
 
 type SelectFieldProps = FormField<React.SelectHTMLAttributes<HTMLSelectElement>>
 export const SelectField = React.forwardRef<
   HTMLSelectElement,
   SelectFieldProps
->(({ label, issues, ...props }, ref) => {
+>(({ label, ...props }, ref) => {
+  const { formState: { errors } } = useFormContext()
+
   return (
-    <div>
-      <label>{label}</label>
+    <div className={styles.field}>
+      <label className={cs({[styles.errorLabel] : !!errors[props.name] })}>{label}</label>
       {/* <VisuallyHidden>{label}</VisuallyHidden> */}
       <select {...props} ref={ref} />
-      <ul>
-        {issues?.map((issue) => (
-          <li key={`${props.name}_${issue}`}>{issue}</li>
-        ))}
-      </ul>
+      <ErrorMessage as="span" className={styles.errorMessage} name={props.name} errors={errors}/>
     </div>
   )
 })

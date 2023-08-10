@@ -27,6 +27,7 @@
   },
   "dependencies": {
     "@fisch0920/use-dark-mode": "^2.4.0",
+    "@hookform/error-message": "^2.0.1",
     "@keyvhq/core": "^2.0.0",
     "@keyvhq/redis": "^2.0.0",
     "@notionhq/client": "^2.2.7",

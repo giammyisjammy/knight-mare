@@ -22,5 +22,9 @@ export default function NewMembershipPage() {
     }
   }
 
-  return <MembershipForm mode='add' onConfirm={onConfirm} />
+  return <div className='notion-page'>
+    <h1 className='notion-title'>Personal information</h1>
+    <p className='notion-text-block'>Type your personal information here</p>
+    <MembershipForm mode='add' onConfirm={onConfirm} />
+  </div>
 }

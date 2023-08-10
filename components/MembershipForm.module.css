@@ -1,0 +1,61 @@
+
+.container {
+  --spacing: 8px;
+  --spacing-2: calc(var(--spacing) * 2);
+  --border-radius: 8px;
+  --field-height: 42px;
+  --label-width: 170px;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+}
+
+.field {
+  display: grid;
+  grid-template-columns: [start col-label-start] minmax(max-content, var(--label-width)) [col-label-end col-input-start] auto [col-input-end end];
+  grid-template-rows: [start row-field-start] minmax(var(--field-height), 1fr) [row-field-end row-errors-start] auto [row-errors-start end];
+  grid-column-gap: var(--spacing);
+  align-items: baseline;
+}
+
+.field.checkboxField{
+  align-items: center;
+}
+
+.field label {
+  grid-area: row-field-start / col-label-start / row-field-end / col-label-end;
+  max-width: var(--label-width);
+}
+
+.field input,
+.field select  {
+  border-radius: var(--border-radius);
+}
+
+.field input:not([type="checkbox"]),
+.field select {
+  min-height: var(--field-height);
+}
+
+.field input[type="checkbox"] {
+  justify-self: flex-start;
+  height: var(--field-height);
+  width: var(--field-height);
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.errorLabel {
+  color: var(--notion-red);
+}
+
+.errorMessage {
+  color: var(--notion-red);
+  grid-area: row-errors-start / 2 / row-errors-end / -1;
+}
