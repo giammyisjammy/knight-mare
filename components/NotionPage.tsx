@@ -26,6 +26,7 @@ import { NotionPageHeader } from './NotionPageHeader'
 import { Page404 } from './Page404'
 import { PageAside } from './PageAside'
 import { PageHead } from './PageHead'
+import { ThemedEmbed } from './ThemedEmbed'
 import styles from './styles.module.css'
 
 // -----------------------------------------------------------------------------
@@ -167,7 +168,8 @@ export const NotionPage: React.FC<types.PageProps> = ({
       Header: NotionPageHeader,
       propertyLastEditedTimeValue,
       propertyTextValue,
-      propertyDateValue
+      propertyDateValue,
+      Embed: ThemedEmbed
     }),
     []
   )
