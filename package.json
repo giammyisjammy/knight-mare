@@ -7,17 +7,16 @@
   "repository": "giammyisjammy/knight-mare",
   "license": "MIT",
   "engines": {
-    "node": ">=18"
+    "node": ">=16"
   },
-  "packageManager": "pnpm@8.6.11",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "deploy": "vercel deploy",
     "deps": "run-s deps:*",
-    "deps:update": "[ -z $GITHUB_ACTIONS ] && pnpm add notion-client notion-types notion-utils react-notion-x || echo 'Skipping deps:update on CI'",
-    "deps:link": "[ -z $GITHUB_ACTIONS ] && pnpm link notion-client notion-types notion-utils react-notion-x || echo 'Skipping deps:link on CI'",
+    "deps:update": "[ -z $GITHUB_ACTIONS ] && yarn add notion-client notion-types notion-utils react-notion-x || echo 'Skipping deps:update on CI'",
+    "deps:link": "[ -z $GITHUB_ACTIONS ] && yarn link notion-client notion-types notion-utils react-notion-x || echo 'Skipping deps:link on CI'",
     "analyze": "cross-env ANALYZE=true next build",
     "analyze:server": "cross-env BUNDLE_ANALYZE=server next build",
     "analyze:browser": "cross-env BUNDLE_ANALYZE=browser next build",
@@ -84,7 +83,7 @@
     }
   },
   "volta": {
-    "node": "18.17.0",
-    "pnpm": "8.6.11"
+    "node": "16.20.2",
+    "yarn": "1.22.4"
   }
 }
