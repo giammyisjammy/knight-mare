@@ -12,8 +12,8 @@ dependencies:
     specifier: ^2.0.0
     version: 2.0.0
   '@keyvhq/redis':
-    specifier: ^1.6.10
-    version: 1.6.28
+    specifier: ^2.0.0
+    version: 2.0.0
   '@notionhq/client':
     specifier: ^2.2.7
     version: 2.2.7
@@ -1890,9 +1890,9 @@ packages:
       json-buffer: 3.0.1
     dev: false
 
-  /@keyvhq/redis@1.6.28:
-    resolution: {integrity: sha512-krF2d1smWf4JUm26DUjwhucMCw+OVTCleg94jJdDZQPvM291FI/8B6B9K1TxiN+cZDk0MBPZmWMIY+2nAhn/gA==}
-    engines: {node: '>= 14'}
+  /@keyvhq/redis@2.0.0:
+    resolution: {integrity: sha512-uVQu+xL0IPPajoybtmX88pDWBzDmNyUHVkhalPIo/zKnsKx16MVzNYY/BT8/PjORLYHQFDnjYVg6tmzGOD7Tig==}
+    engines: {node: '>= 16'}
     dependencies:
       ioredis: 5.3.2
       p-event: 4.2.0
