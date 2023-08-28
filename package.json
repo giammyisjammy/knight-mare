@@ -35,7 +35,6 @@
     "@keyvhq/redis": "^2.0.0",
     "@mui/icons-material": "^5.14.6",
     "@mui/material": "^5.14.6",
-    "@mui/styled-engine-sc": "^5.14.6",
     "@mui/x-date-pickers": "^6.12.0",
     "@notionhq/client": "^2.2.7",
     "@react-icons/all-files": "^4.1.0",
@@ -65,7 +64,6 @@
     "react-tweet-embed": "^2.0.0",
     "react-use": "^17.3.2",
     "rss": "^1.2.2",
-    "styled-components": "^6.0.7",
     "use-sound": "^4.0.1"
   },
   "devDependencies": {
