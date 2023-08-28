@@ -26,6 +26,7 @@
     "test:prettier": "prettier '**/*.{js,jsx,ts,tsx}' --check"
   },
   "dependencies": {
+    "@buildo/bento-design-system": "^0.20.1",
     "@fisch0920/use-dark-mode": "^2.4.0",
     "@hookform/error-message": "^2.0.1",
     "@keyvhq/core": "^2.0.0",
