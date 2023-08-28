@@ -112,3 +112,4 @@ export const TextMaskCustom = React.forwardRef<
     />
   )
 })
+TextMaskCustom.displayName = 'TextMaskCustom'
