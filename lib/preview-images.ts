@@ -1,4 +1,4 @@
-import got from 'got'
+import got from 'got' // eslint-disable-line import/no-named-as-default
 import lqip from 'lqip-modern'
 import { ExtendedRecordMap, PreviewImage, PreviewImageMap } from 'notion-types'
 import { getPageImageUrls, normalizeUrl } from 'notion-utils'

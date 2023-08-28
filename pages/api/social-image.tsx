@@ -63,6 +63,9 @@ export default async function OGImage(req: NextRequest) {
         }}
       >
         {pageInfo.image && (
+          // giammyisjammy: this is a Open Graph images with Vercel’s API route
+          // functions, no need to use next/image here
+          // eslint-disable-next-line @next/next/no-img-element
           <img
             src={pageInfo.image}
             style={{
@@ -148,6 +151,9 @@ export default async function OGImage(req: NextRequest) {
               zIndex: '5'
             }}
           >
+            {/* giammyisjammy: this is a Open Graph images with Vercel’s API route */}
+            {/* functions, no need to use next/image here */}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={pageInfo.authorImage}
               style={{
