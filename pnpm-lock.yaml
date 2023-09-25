@@ -21,8 +21,8 @@ dependencies:
     specifier: ^4.1.0
     version: 4.1.0(react@18.2.0)
   '@vercel/og':
-    specifier: ^0.5.11
-    version: 0.5.11
+    specifier: ^0.5.17
+    version: 0.5.17
   classnames:
     specifier: ^2.3.1
     version: 2.3.2
@@ -2780,12 +2780,12 @@ packages:
       react: 18.2.0
     dev: false
 
-  /@vercel/og@0.5.11:
-    resolution: {integrity: sha512-07SDyClsPXod1dReV9wuwk5uEHvJH42V12Ovy005Zp+Hwq3CZEyWa2gRi12HlXCqoIupOG0//LAFBp1Tt2EwjQ==}
+  /@vercel/og@0.5.17:
+    resolution: {integrity: sha512-/GOyUBq3MhB3ygbhTJoZ0cHvwlyKdt0g8f4npuj4mwFlp57S7j4XWwgtqILK3XdFf25esN9i77fInrDkeRJfgA==}
     engines: {node: '>=16'}
     dependencies:
       '@resvg/resvg-wasm': 2.4.1
-      satori: 0.10.3
+      satori: 0.10.8
       yoga-wasm-web: 0.3.3
     dev: false
 
@@ -7383,8 +7383,8 @@ packages:
       is-regex: 1.1.4
     dev: true
 
-  /satori@0.10.3:
-    resolution: {integrity: sha512-8tZPu7AGiRWimbOyja1s2HK0hEC4DacZ8cAKDITxlVI5tKQZbOuMiVgSB50CABwc0I4Imgtkq7o9Egj1WOJTKg==}
+  /satori@0.10.8:
+    resolution: {integrity: sha512-WlPLxgpx5kIyMuOO6qi98DhZGIbRk5XJRqENkt6D6gyDBWGyo3M5kcSl0X/oSFHUH+n4unlzwMejoPM47s4zug==}
     engines: {node: '>=16'}
     dependencies:
       '@shuding/opentype.js': 1.4.0-beta.0
