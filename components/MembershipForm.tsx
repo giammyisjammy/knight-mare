@@ -1,5 +1,6 @@
 import * as React from 'react'
-import { useForm,
+import {
+  useForm,
   SubmitHandler,
   SubmitErrorHandler,
   FormProvider,
@@ -8,7 +9,7 @@ import { useForm,
   PathString
 } from 'react-hook-form'
 import cs from 'classnames'
-import { ErrorMessage } from "@hookform/error-message";
+import { ErrorMessage } from '@hookform/error-message'
 
 import { ClubMember } from '@/lib/ClubMember'
 
@@ -20,18 +21,25 @@ const validators = {
   required: (message = 'This is required.') => ({
     required: message
   }),
-  minLength: (value: number, message = `This should be at least ${value} length.` ) => ({
-    minLength:{ value, message }
+  minLength: (
+    value: number,
+    message = `This should be at least ${value} length.`
+  ) => ({
+    minLength: { value, message }
   }),
-  maxLength: (value: number, message = `This should be at most ${value} length.`) => ({
-    maxLength:{ value, message }
+  maxLength: (
+    value: number,
+    message = `This should be at most ${value} length.`
+  ) => ({
+    maxLength: { value, message }
   }),
   email: (message = 'Not a valid email.') => ({
     pattern: { value: /^\S+@\S+$/i, message }
   }),
   fiscalCode: (message = 'Not a valid fiscal code.') => ({
     pattern: {
-      value: /^([A-Z]{6}[0-9LMNPQRSTUV]{2}[ABCDEHLMPRST]{1}[0-9LMNPQRSTUV]{2}[A-Z]{1}[0-9LMNPQRSTUV]{3}[A-Z]{1})$|([0-9]{11})$/i,
+      value:
+        /^([A-Z]{6}[0-9LMNPQRSTUV]{2}[ABCDEHLMPRST]{1}[0-9LMNPQRSTUV]{2}[A-Z]{1}[0-9LMNPQRSTUV]{3}[A-Z]{1})$|([0-9]{11})$/i,
       message
     }
   }),
@@ -42,20 +50,20 @@ const validators = {
 
 const MembershipFormProvider: React.FC<{
   defaultValues?: ClubMember
-  children: (methods: UseFormReturn<ClubMember, any, undefined>) => React.ReactNode;
-}> = ({defaultValues, children}) => {
+  children: (
+    methods: UseFormReturn<ClubMember, any, undefined>
+  ) => React.ReactNode
+}> = ({ defaultValues, children }) => {
   const methods = useForm<ClubMember>({ defaultValues })
 
   console.log(methods.formState.errors)
 
-  return <FormProvider {...methods}>
-    {children(methods)}
-  </FormProvider>
+  return <FormProvider {...methods}>{children(methods)}</FormProvider>
 }
 
 type Props =
   | {
-    className?: string
+      className?: string
       onConfirm: SubmitHandler<ClubMember | undefined> // HACK should be just undefined
       onInvalid?: SubmitErrorHandler<ClubMember>
     } & (
@@ -79,7 +87,7 @@ export default function MembershipForm({
 
   return (
     <MembershipFormProvider defaultValues={defaultValues}>
-      {({ register, handleSubmit })=>
+      {({ register, handleSubmit }) => (
         <form
           className={className}
           onSubmit={handleSubmit(
@@ -116,22 +124,34 @@ export default function MembershipForm({
             <InputField
               label='Nome'
               placeholder='Nome'
-              {...register('firstName', { ...validators.required(), ...validators.maxLength(80) })}
+              {...register('firstName', {
+                ...validators.required(),
+                ...validators.maxLength(80)
+              })}
             />
             <InputField
               label='Cognome'
               placeholder='Cognome'
-              {...register('lastName', { ...validators.required(), ...validators.maxLength(100) })}
+              {...register('lastName', {
+                ...validators.required(),
+                ...validators.maxLength(100)
+              })}
             />
             <InputField
               label='Codice Fiscale'
               placeholder='Codice Fiscale'
-              {...register('fiscalCode', { ...validators.required(), ...validators.fiscalCode() })}
+              {...register('fiscalCode', {
+                ...validators.required(),
+                ...validators.fiscalCode()
+              })}
             />
             <InputField
               label='Email'
               placeholder='Email'
-              {...register('email', { ...validators.required(), ...validators.email() })}
+              {...register('email', {
+                ...validators.required(),
+                ...validators.email()
+              })}
             />
             <InputField
               label='Indirizzo'
@@ -161,17 +181,26 @@ export default function MembershipForm({
             <InputField
               label='CAP'
               placeholder='CAP'
-              {...register('CAP', { ...validators.required(), ...validators.CAP() })}
+              {...register('CAP', {
+                ...validators.required(),
+                ...validators.CAP()
+              })}
             />
             <InputField
               label='Provincia di Nascita'
               placeholder='Provincia di Nascita'
-              {...register('birthProvince', { ...validators.required(), ...validators.maxLength(2) })}
+              {...register('birthProvince', {
+                ...validators.required(),
+                ...validators.maxLength(2)
+              })}
             />
             <InputField
               label='Provincia di Residenza'
               placeholder='Provincia residenza'
-              {...register('cityProvince', { ...validators.required(), ...validators.maxLength(2) })}
+              {...register('cityProvince', {
+                ...validators.required(),
+                ...validators.maxLength(2)
+              })}
             />
             <SelectField
               label='Tipologia Affiliazione'
@@ -210,7 +239,7 @@ export default function MembershipForm({
             </div>
           </div>
         </form>
-      }
+      )}
     </MembershipFormProvider>
   )
 }
@@ -219,24 +248,34 @@ type FormField<T> = T & {
   label: PathString
 }
 
-type InputFieldProps = FormField<
-  React.InputHTMLAttributes<HTMLInputElement>
->
-const InputField = React.forwardRef<
-  HTMLInputElement,
-  InputFieldProps
->(({ label, ...props }, ref) => {
-  const { formState: { errors } } = useFormContext()
+type InputFieldProps = FormField<React.InputHTMLAttributes<HTMLInputElement>>
+const InputField = React.forwardRef<HTMLInputElement, InputFieldProps>(
+  ({ label, ...props }, ref) => {
+    const {
+      formState: { errors }
+    } = useFormContext()
 
-  return (
-    <div className={cs(styles.field, { [styles.checkboxField]: props.type === 'checkbox' })}>
-      <label className={cs({[styles.errorLabel] : !!errors[props.name] })}>{label}</label>
-      {/* <VisuallyHidden>{label}</VisuallyHidden> */}
-      <input {...props} ref={ref} />
-      <ErrorMessage as="span" className={styles.errorMessage} name={props.name} errors={errors}/>
-    </div>
-  )
-})
+    return (
+      <div
+        className={cs(styles.field, {
+          [styles.checkboxField]: props.type === 'checkbox'
+        })}
+      >
+        <label className={cs({ [styles.errorLabel]: !!errors[props.name] })}>
+          {label}
+        </label>
+        {/* <VisuallyHidden>{label}</VisuallyHidden> */}
+        <input {...props} ref={ref} />
+        <ErrorMessage
+          as='span'
+          className={styles.errorMessage}
+          name={props.name}
+          errors={errors}
+        />
+      </div>
+    )
+  }
+)
 InputField.displayName = 'InputField'
 
 type SelectFieldProps = FormField<React.SelectHTMLAttributes<HTMLSelectElement>>
@@ -244,14 +283,23 @@ export const SelectField = React.forwardRef<
   HTMLSelectElement,
   SelectFieldProps
 >(({ label, ...props }, ref) => {
-  const { formState: { errors } } = useFormContext()
+  const {
+    formState: { errors }
+  } = useFormContext()
 
   return (
     <div className={styles.field}>
-      <label className={cs({[styles.errorLabel] : !!errors[props.name] })}>{label}</label>
+      <label className={cs({ [styles.errorLabel]: !!errors[props.name] })}>
+        {label}
+      </label>
       {/* <VisuallyHidden>{label}</VisuallyHidden> */}
       <select {...props} ref={ref} />
-      <ErrorMessage as="span" className={styles.errorMessage} name={props.name} errors={errors}/>
+      <ErrorMessage
+        as='span'
+        className={styles.errorMessage}
+        name={props.name}
+        errors={errors}
+      />
     </div>
   )
 })

@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import got from 'got'
+import got from 'got' // eslint-disable-line import/no-named-as-default
 import { PageBlock } from 'notion-types'
 import {
   getBlockIcon,
