@@ -21,8 +21,8 @@ dependencies:
     specifier: ^4.1.0
     version: 4.1.0(react@18.2.0)
   '@vercel/og':
-    specifier: ^0.5.11
-    version: 0.5.11
+    specifier: ^0.5.20
+    version: 0.5.20
   classnames:
     specifier: ^2.3.1
     version: 2.3.2
@@ -2403,8 +2403,8 @@ packages:
       zustand: 3.7.2(react@18.2.0)
     dev: false
 
-  /@resvg/resvg-wasm@2.4.1:
-    resolution: {integrity: sha512-yi6R0HyHtsoWTRA06Col4WoDs7SvlXU3DLMNP2bdAgs7HK18dTEVl1weXgxRzi8gwLteGUbIg29zulxIB3GSdg==}
+  /@resvg/resvg-wasm@2.6.0:
+    resolution: {integrity: sha512-iDkBM6Ivex8nULtBu8cX670/lfsGxq8U1cuqE+qS9xFpPQP1enPdVm/33Kq3+B+bAldA+AHNZnCgpmlHo/fZrQ==}
     engines: {node: '>= 10'}
     dev: false
 
@@ -2780,12 +2780,12 @@ packages:
       react: 18.2.0
     dev: false
 
-  /@vercel/og@0.5.11:
-    resolution: {integrity: sha512-07SDyClsPXod1dReV9wuwk5uEHvJH42V12Ovy005Zp+Hwq3CZEyWa2gRi12HlXCqoIupOG0//LAFBp1Tt2EwjQ==}
+  /@vercel/og@0.5.20:
+    resolution: {integrity: sha512-zi+ZXSx/peXA+1lq7s/5Vzmm/TTfTSf/5P1qNYnh42+7X+pZmahWoXt0i7SWiq3WagfsNUNA4hUDapDiHRoXqA==}
     engines: {node: '>=16'}
     dependencies:
-      '@resvg/resvg-wasm': 2.4.1
-      satori: 0.10.3
+      '@resvg/resvg-wasm': 2.6.0
+      satori: 0.10.9
       yoga-wasm-web: 0.3.3
     dev: false
 
@@ -7383,8 +7383,8 @@ packages:
       is-regex: 1.1.4
     dev: true
 
-  /satori@0.10.3:
-    resolution: {integrity: sha512-8tZPu7AGiRWimbOyja1s2HK0hEC4DacZ8cAKDITxlVI5tKQZbOuMiVgSB50CABwc0I4Imgtkq7o9Egj1WOJTKg==}
+  /satori@0.10.9:
+    resolution: {integrity: sha512-XU9EELUEZuioT4acLIpCXxHcFzrsC8muvg0MY28d+TlqwxbkTzBmWbw+3+hnCzXT7YZ0Qm8k3eXktDaEu+qmEw==}
     engines: {node: '>=16'}
     dependencies:
       '@shuding/opentype.js': 1.4.0-beta.0
