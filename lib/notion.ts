@@ -182,7 +182,6 @@ export async function createRegisterOfMemberEntry(newClubMember: ClubMember) {
       }
     }
   })
-  console.log(response)
 }
 
 export async function retrieveMembershipTypes() {
@@ -193,6 +192,5 @@ export async function retrieveMembershipTypes() {
   const membershipTypes = response.properties['Tipologia Affiliazione'][
     'select'
   ]['options'].filter((e) => e.description !== '!private')
-  console.log(membershipTypes)
   return membershipTypes
 }
