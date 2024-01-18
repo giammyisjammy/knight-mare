@@ -71,7 +71,7 @@ export async function search(params: SearchParams): Promise<SearchResults> {
 }
 
 export async function createRegisterOfMemberEntry(newClubMember: ClubMember) {
-  const response = await notionClient.pages.create({
+  return await notionClient.pages.create({
     // cover: {
     //   type: 'external',
     //   external: {
@@ -171,16 +171,26 @@ export async function createRegisterOfMemberEntry(newClubMember: ClubMember) {
         // id: 'CohL',
         type: 'select',
         select: {
-          name: 'Non pagato'
+          name: 'Irregolare'
         }
       },
       'Stato Associativo': {
         // id: 'x%3EU%3E',
         select: {
-          name: 'Congelato'
+          name: 'Nuovo'
         }
       }
     }
   })
-  console.log(response)
+}
+
+export async function retrieveMembershipTypes() {
+  const databaseId = registerOfMembersDatabaseId
+  const response = await notionClient.databases.retrieve({
+    database_id: databaseId
+  })
+  const membershipTypes = response.properties['Tipologia Affiliazione'][
+    'select'
+  ]['options'].filter((e) => e.description !== '!private')
+  return membershipTypes
 }
