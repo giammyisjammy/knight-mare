@@ -15,8 +15,13 @@ jobs:
 
       - run: pnpm install --frozen-lockfile
       - name: build
-        #        TODO Enable those lines below if you use a Redis cache, you'll also need to configure GitHub Repository Secrets
-        #        env:
-        #          REDIS_HOST: ${{ secrets.REDIS_HOST }}
-        #          REDIS_PASSWORD: ${{ secrets.REDIS_PASSWORD }}
+        env:
+          NEXT_PUBLIC_SITE_CONFIG: ${{ secrets.NEXT_PUBLIC_SITE_CONFIG }}
+          NOTION_ACTIVE_USER: ${{ secrets.NOTION_ACTIVE_USER }}
+          NOTION_API_KEY: ${{ secrets.NOTION_API_KEY }}
+          NOTION_REGISTER_OF_MEMBERS_DATABASE_ID: ${{ secrets.NOTION_REGISTER_OF_MEMBERS_DATABASE_ID }}
+          NOTION_TOKEN_V2: ${{ secrets.NOTION_TOKEN_V2 }}
+          # TODO Enable those lines below if you use a Redis cache, you'll also need to configure GitHub Repository Secrets
+          # REDIS_HOST: ${{ secrets.REDIS_HOST }}
+          # REDIS_PASSWORD: ${{ secrets.REDIS_PASSWORD }}
         run: pnpm build
