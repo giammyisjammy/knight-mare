@@ -155,7 +155,8 @@ export const api = {
   searchNotion: `${apiBaseUrl}/search-notion`,
   getNotionPageInfo: `${apiBaseUrl}/notion-page-info`,
   getSocialImage: `${apiBaseUrl}/social-image`,
-  createNewMember: `${apiBaseUrl}/create-new-member`
+  createNewMember: `${apiBaseUrl}/create-new-member`,
+  retrieveMembershipTypes: `${apiBaseUrl}/retrieve-membership-types`
 }
 
 // ----------------------------------------------------------------------------

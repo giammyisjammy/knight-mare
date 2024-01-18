@@ -71,3 +71,10 @@ export interface NotionPageInfo {
   authorImage: string
   detail: string
 }
+
+export interface MembershipType {
+  id: string | null
+  name: string | null
+  color: string | null
+  description: string | null
+}
