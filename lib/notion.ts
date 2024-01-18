@@ -71,7 +71,7 @@ export async function search(params: SearchParams): Promise<SearchResults> {
 }
 
 export async function createRegisterOfMemberEntry(newClubMember: ClubMember) {
-  const response = await notionClient.pages.create({
+  return await notionClient.pages.create({
     // cover: {
     //   type: 'external',
     //   external: {
