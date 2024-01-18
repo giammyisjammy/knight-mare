@@ -61,7 +61,7 @@ export default siteConfig({
       pageId: '0397e7a16b304032940d68636ddb2d4a'
     },
     {
-      title: 'Iscrizioni 2023',
+      title: `Iscrizioni ${new Date().getFullYear()}`,
       pageId: '3f0539f4523a46b88e65085c60e39bd8'
     }
   ]
