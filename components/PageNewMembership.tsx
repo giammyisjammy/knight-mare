@@ -2,11 +2,20 @@ import * as React from 'react'
 
 import { api } from '@/lib/config'
 import fetcher from '@/lib/fetcher'
+import type { MembershipType } from '@/lib/types'
 
 import MembershipForm from './MembershipForm'
 import { PageHead } from './PageHead'
 
-export default function NewMembershipPage() {
+export type NewMembershipPageProps = {
+  membershipTypes: MembershipType[]
+}
+
+// TODO disable button while fetching
+// TODO on succes/failure, add result toast and clear form
+export default function NewMembershipPage({
+  membershipTypes
+}: NewMembershipPageProps) {
   return (
     <>
       <PageHead title='🚧 Modulo Iscrizione Socio (under construction)' />
@@ -15,6 +24,7 @@ export default function NewMembershipPage() {
         <p className='notion-text-block'>Type your personal information here</p> */}
         <MembershipForm
           className='notion-page-content'
+          membershipTypes={membershipTypes}
           mode='add'
           onConfirm={async (formData) => {
             console.log('New subscription', formData)
