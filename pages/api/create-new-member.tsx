@@ -1,9 +1,17 @@
 import { NextApiRequest, NextApiResponse } from 'next'
+import { Bot } from 'grammy'
 
 import { ClubMember } from '@/lib/ClubMember'
 import { createRegisterOfMemberEntry } from '@/lib/notion'
+import { getEnv } from '@/lib/get-config-value'
+import { notificationMessages } from '@/lib/get-notification-messages'
 
-// import { search } from '../../lib/notion'
+// Create a new bot instance
+const bot = new Bot(getEnv('NEXT_TELEGRAM_TOKEN'))
+bot.start()
+
+const chat_id = Number(getEnv('NEXT_TELEGRAM_CHAT_ID'))
+const message_thread_id = Number(getEnv('NEXT_TELEGRAM_MESSAGE_THREAD_ID'))
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method !== 'POST') {
@@ -16,8 +24,19 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     const newClubMember = ClubMember.deserialize(JSON.parse(req.body))
     console.log('<<< lambda create-database-entry', newClubMember)
 
-    const results = await createRegisterOfMemberEntry(newClubMember)
-    console.log('>>> lambda create-database-entry', results)
+    const registrationResults = await createRegisterOfMemberEntry(newClubMember)
+    console.log('>>> lambda create-database-entry', registrationResults)
+
+    // send telegram notification
+    const message = notificationMessages.newSubscription({
+      member: newClubMember,
+      isSuccesfullyRegistered: !!registrationResults.id,
+      isMailSent: false
+    })
+    await bot.api.sendMessage(chat_id, message, {
+      message_thread_id,
+      parse_mode: 'HTML'
+    })
 
     res.status(200).json({ ok: true })
   } catch (error) {

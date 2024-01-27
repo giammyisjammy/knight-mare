@@ -12,8 +12,10 @@
   "packageManager": "pnpm@8.6.11",
   "scripts": {
     "dev": "next dev",
+    "dev:bot": "ts-node-dev --project ./tsconfig.bot.json ./lib/bot.ts",
     "build": "next build",
     "start": "next start",
+    "start:bot": "ts-node --project ./tsconfig.bot.json ./lib/bot.ts",
     "deploy": "vercel deploy",
     "deps": "run-s deps:*",
     "deps:update": "[ -z $GITHUB_ACTIONS ] && pnpm add notion-client notion-types notion-utils react-notion-x || echo 'Skipping deps:update on CI'",
@@ -41,9 +43,11 @@
     "@vercel/og": "^0.5.11",
     "classnames": "^2.3.1",
     "date-fns": "^2.28.0",
+    "dotenv": "^16.4.1",
     "expiry-map": "^2.0.0",
     "fathom-client": "^3.4.1",
     "got": "^12.0.3",
+    "grammy": "^1.20.3",
     "isomorphic-unfetch": "^3.1.0",
     "lqip-modern": "^2.0.0",
     "next": "^12.3.1",
@@ -84,6 +88,8 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.7.1",
+    "ts-node": "^10.9.2",
+    "ts-node-dev": "^2.0.0",
     "typescript": "^4.8.4"
   },
   "overrides": {
