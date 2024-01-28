@@ -1,3 +1,4 @@
+import { getEnv } from './lib/get-config-value'
 import { siteConfig } from './lib/site-config'
 
 export default siteConfig({
@@ -11,11 +12,11 @@ export default siteConfig({
 
   // basic site info (required)
   name: 'Circolo Scacchi Cantù',
-  domain: 'club-scacchi-cantu.notion.site',
+  domain: getEnv('VERCEL_URL', 'circoloscacchicantu.it'),
   author: 'ASD Circolo Scacchi Cantù - C.F. 90046270139',
 
   // open graph metadata (optional)
-  description: 'Circolo Scacchi Cantù Site',
+  description: 'Benvenuti al Circolo Scacchi di Cantù ',
 
   // social usernames (optional)
   // twitter: '',
