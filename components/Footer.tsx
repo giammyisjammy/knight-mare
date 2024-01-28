@@ -139,6 +139,7 @@ export const FooterImpl: React.FC = () => {
 
       <div className={styles.copyright}>
         Copyright {new Date().getFullYear()} {config.author}
+        {config.authorInfo && ` - ${config.authorInfo}`}
       </div>
     </footer>
   )
