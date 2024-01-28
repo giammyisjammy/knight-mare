@@ -12,8 +12,7 @@ export default siteConfig({
 
   // basic site info (required)
   name: 'Circolo Scacchi Cantù',
-  domain: getEnv('VERCEL_URL', 'circoloscacchicantu.it'),
-  author: 'ASD Circolo Scacchi Cantù - C.F. 90046270139',
+  domain: getEnv('PUBLIC_DOMAIN', 'circoloscacchicantu.it'),
 
   // open graph metadata (optional)
   description: 'Benvenuti al Circolo Scacchi di Cantù ',
