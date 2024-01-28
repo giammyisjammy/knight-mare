@@ -2,6 +2,7 @@ import * as React from 'react'
 import Document, { Head, Html, Main, NextScript } from 'next/document'
 
 import { IconContext } from '@react-icons/all-files'
+import { SpeedInsights } from '@vercel/speed-insights/next'
 
 import { NoFlashScript } from '@/components/NoFlashScript'
 
@@ -23,10 +24,11 @@ export default class MyDocument extends Document {
           </Head>
 
           <body>
-            <NoFlashScript />
             <Main />
 
             <NextScript />
+            <NoFlashScript />
+            <SpeedInsights />
           </body>
         </Html>
       </IconContext.Provider>
