@@ -12,7 +12,7 @@ export default siteConfig({
   // basic site info (required)
   name: 'Circolo Scacchi Cantù',
   domain: 'club-scacchi-cantu.notion.site',
-  author: 'Circolo Scacchi Cantù',
+  author: 'ASD Circolo Scacchi Cantù - C.F. 90046270139',
 
   // open graph metadata (optional)
   description: 'Circolo Scacchi Cantù Site',
@@ -61,8 +61,8 @@ export default siteConfig({
       pageId: '0397e7a16b304032940d68636ddb2d4a'
     },
     {
-      title: 'Iscrizioni 2024',
-      pageId: '299e27133664473dab769e2928783b6b'
+      title: `Iscrizioni ${new Date().getFullYear()}`,
+      pageId: '3f0539f4523a46b88e65085c60e39bd8'
     }
   ]
 })
