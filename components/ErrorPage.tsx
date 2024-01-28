@@ -12,7 +12,7 @@ export const ErrorPage: React.FC<{ statusCode: number }> = ({ statusCode }) => {
 
       <div className={styles.container}>
         <main className={styles.main}>
-          <h1>Error Loading Page</h1>
+          <h1>Errore nel caricamento della pagina</h1>
 
           {statusCode && <p>Error code: {statusCode}</p>}
 
