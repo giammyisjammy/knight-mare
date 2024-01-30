@@ -11,21 +11,19 @@
   },
   "packageManager": "pnpm@8.6.11",
   "scripts": {
-    "dev": "next dev",
-    "dev:bot": "ts-node-dev --project ./tsconfig.bot.json ./lib/bot.ts",
-    "build": "next build",
     "start": "next start",
-    "start:bot": "ts-node --project ./tsconfig.bot.json ./lib/bot.ts",
+    "build": "next build",
+    "dev": "next dev",
     "deploy": "vercel deploy",
-    "deps": "run-s deps:*",
-    "deps:update": "[ -z $GITHUB_ACTIONS ] && pnpm add notion-client notion-types notion-utils react-notion-x || echo 'Skipping deps:update on CI'",
-    "deps:link": "[ -z $GITHUB_ACTIONS ] && pnpm link notion-client notion-types notion-utils react-notion-x || echo 'Skipping deps:link on CI'",
+    "deploy:prod": "vercel deploy --prod",
     "analyze": "cross-env ANALYZE=true next build",
     "analyze:server": "cross-env BUNDLE_ANALYZE=server next build",
     "analyze:browser": "cross-env BUNDLE_ANALYZE=browser next build",
     "test": "run-p test:*",
     "test:lint": "eslint '**/*.{ts,tsx}'",
-    "test:prettier": "prettier '**/*.{js,jsx,ts,tsx}' --check"
+    "test:prettier": "prettier '**/*.{js,jsx,ts,tsx}' --check",
+    "start:bot": "ts-node --project ./tsconfig.bot.json ./lib/bot.ts",
+    "dev:bot": "ts-node-dev --project ./tsconfig.bot.json ./lib/bot.ts"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",

@@ -14,10 +14,11 @@ module.exports = withBundleAnalyzer({
       { hostname: 'abs.twimg.com' },
       { hostname: 's3.us-west-2.amazonaws.com' },
       { hostname: '**.vercel.app' },
-      { hostname: 'circoloscacchicantu.it' },
-      { hostname: 'circoloscacchicantu.com' },
-      { hostname: 'circoloscacchicantu.org' },
-      { hostname: 'cantuchess.club' }
+      { hostname: '**.notion.so' },
+      { hostname: '**.circoloscacchicantu.it' },
+      { hostname: '**.circoloscacchicantu.com' },
+      { hostname: '**.circoloscacchicantu.org' },
+      { hostname: '**.cantuchess.club' }
     ].map((pattern) => ({ ...pattern, protocol: 'https' })),
     formats: ['image/avif', 'image/webp'],
     dangerouslyAllowSVG: true,
