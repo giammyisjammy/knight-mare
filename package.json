@@ -26,6 +26,7 @@
     "dev:bot": "ts-node-dev --project ./tsconfig.bot.json ./lib/bot.ts"
   },
   "dependencies": {
+    "@buildo/bento-design-system": "^0.22.4",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@fisch0920/use-dark-mode": "^2.4.0",
