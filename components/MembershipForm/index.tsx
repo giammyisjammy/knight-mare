@@ -53,12 +53,11 @@ export default function MembershipForm({
   mode,
   memberInfo
 }: Props) {
-  const defaultValues =
-    mode === 'edit' ? memberInfo.serialize() : new ClubMember().serialize()
+  const defaultValues = mode === 'edit' ? memberInfo : new ClubMember()
 
   const [isSubmitting, setIsSubmitting] = React.useState(false)
   const formContext = useForm({ defaultValues })
-  const { reset, formState, handleSubmit } = formContext
+  const { reset, formState } = formContext
 
   React.useEffect(() => {
     if (formState.isSubmitSuccessful) {
@@ -71,8 +70,9 @@ export default function MembershipForm({
       <ThemeProvider theme={defaultTheme}>
         <DateFnsProvider adapterLocale={it}>
           <FormContainer
+            defaultValues={defaultValues}
             formContext={formContext}
-            onSuccess={handleSubmit(async (values) => {
+            onSuccess={async (values) => {
               setIsSubmitting(true)
               try {
                 await onConfirm(values)
@@ -81,7 +81,7 @@ export default function MembershipForm({
               } finally {
                 setIsSubmitting(false)
               }
-            })}
+            }}
             onError={onInvalid}
           >
             <Container
