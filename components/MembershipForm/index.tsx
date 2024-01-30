@@ -53,7 +53,8 @@ export default function MembershipForm({
   mode,
   memberInfo
 }: Props) {
-  const defaultValues = mode === 'edit' ? memberInfo : new ClubMember()
+  const defaultValues =
+    mode === 'edit' ? memberInfo.serialize() : new ClubMember().serialize()
 
   const [isSubmitting, setIsSubmitting] = React.useState(false)
   const formContext = useForm({ defaultValues })
@@ -70,6 +71,7 @@ export default function MembershipForm({
       <ThemeProvider theme={defaultTheme}>
         <DateFnsProvider adapterLocale={it}>
           <FormContainer
+            formContext={formContext}
             onSuccess={handleSubmit(async (values) => {
               setIsSubmitting(true)
               try {
