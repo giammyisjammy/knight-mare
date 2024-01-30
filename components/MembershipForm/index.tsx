@@ -1,6 +1,7 @@
 import * as React from 'react'
 
 import Button from '@mui/material/Button'
+import CircularProgress from '@mui/material/CircularProgress'
 import CssBaseline from '@mui/material/CssBaseline'
 import MenuItem from '@mui/material/MenuItem'
 import Box from '@mui/material/Box'
@@ -8,12 +9,14 @@ import Container from '@mui/material/Container'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 
 import it from 'date-fns/locale/it'
-import { SubmitHandler, SubmitErrorHandler } from 'react-hook-form'
 import {
   FormContainer,
   TextFieldElement,
   CheckboxElement,
-  DatePickerElement
+  DatePickerElement,
+  useForm,
+  SubmitHandler,
+  SubmitErrorHandler
 } from 'react-hook-form-mui'
 
 import { ClubMember } from '@/lib/ClubMember'
@@ -21,10 +24,9 @@ import type { MembershipType } from '@/lib/types'
 
 import { PhoneInput } from './components'
 import DateFnsProvider from './DateFnsProvider'
-
 // import VisuallyHidden from './VisuallyHidden'
 
-// TODO remove, this demo shouldn't need to reset the theme.
+// TODO remove, this shouldn't need to reset the theme.
 const defaultTheme = createTheme()
 
 type Props =
@@ -53,13 +55,31 @@ export default function MembershipForm({
 }: Props) {
   const defaultValues = mode === 'edit' ? memberInfo : new ClubMember()
 
+  const [isSubmitting, setIsSubmitting] = React.useState(false)
+  const formContext = useForm({ defaultValues })
+  const { reset, formState, handleSubmit } = formContext
+
+  React.useEffect(() => {
+    if (formState.isSubmitSuccessful) {
+      reset()
+    }
+  }, [formState, isSubmitting, reset])
+
   return (
     <>
       <ThemeProvider theme={defaultTheme}>
         <DateFnsProvider adapterLocale={it}>
           <FormContainer
-            defaultValues={defaultValues}
-            onSuccess={onConfirm}
+            onSuccess={handleSubmit(async (values) => {
+              setIsSubmitting(true)
+              try {
+                await onConfirm(values)
+              } catch {
+                //
+              } finally {
+                setIsSubmitting(false)
+              }
+            })}
             onError={onInvalid}
           >
             <Container
@@ -224,7 +244,9 @@ export default function MembershipForm({
                     fullWidth
                     variant='contained'
                     sx={{ mt: 3, mb: 2 }}
+                    disabled={isSubmitting}
                   >
+                    {isSubmitting && <CircularProgress size={24} />}
                     Invia
                   </Button>
                 </Box>
