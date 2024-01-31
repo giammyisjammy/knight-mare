@@ -11,17 +11,14 @@ export type NewMembershipPageProps = {
   membershipTypes: MembershipType[]
 }
 
-// TODO disable button while fetching
-// TODO on succes/failure, add result toast and clear form
+// TODO on success/failure, add result toast and clear form
 export default function NewMembershipPage({
   membershipTypes
 }: NewMembershipPageProps) {
   return (
     <>
-      <PageHead title='🚧 Modulo Iscrizione Socio (under construction)' />
+      <PageHead title='Modulo Iscrizione Socio' />
       <div className='notion-page'>
-        {/* <h1 className='notion-title'>Personal information</h1>
-        <p className='notion-text-block'>Type your personal information here</p> */}
         <MembershipForm
           className='notion-page-content'
           membershipTypes={membershipTypes}

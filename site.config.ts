@@ -1,4 +1,3 @@
-import { getEnv } from './lib/get-config-value'
 import { siteConfig } from './lib/site-config'
 
 export default siteConfig({
@@ -12,7 +11,7 @@ export default siteConfig({
 
   // basic site info (required)
   name: 'Circolo Scacchi Cantù',
-  domain: getEnv('PUBLIC_DOMAIN', 'circoloscacchicantu.it'),
+  domain: 'circoloscacchicantu.it',
   author: 'ASD Circolo Scacchi Cantù',
   authorInfo: 'C.F. 90046270139',
 
