@@ -387,3 +387,20 @@
 .notion-block-260baa77f1e1428b97fb14ac99c7c385 {
   display: none;
 }
+
+/* A better handling of logo colours in dark mode */
+/* Using filter to shift logo colours while in dark mode */
+/* keep in mind that images are served from Notion so we have little control
+over applied styles and we have to resort to Wordpress-style overriding */
+.index-page.dark-mode .notion-page-content .notion-column img {
+  filter: invert(100%) sepia(0%) saturate(7479%) hue-rotate(40deg)
+    brightness(113%) contrast(65%);
+}
+.index-page.dark-mode img.medium-zoom-image,
+.index-page.dark-mode.medium-zoom img.medium-zoom-image,
+.index-page.dark-mode.medium-zoom img.medium-zoom-image--opened,
+.index-page.dark-mode.medium-zoom--opened img.medium-zoom-image,
+.index-page.dark-mode.medium-zoom--opened img.medium-zoom-image--opened {
+  filter: invert(100%) sepia(0%) saturate(7479%) hue-rotate(40deg)
+    brightness(113%) contrast(65%);
+}
