@@ -44,9 +44,9 @@ This project requires a recent version of Node.js (we recommend >= 18).
 
 1. Fork / clone this repo
 2. Change a few values in [site.config.ts](./site.config.ts)
-3. `pnpm install`
-4. `pnpm run dev` to test locally
-5. `pnpm run deploy` to deploy to vercel 💪
+3. `yarn`
+4. `yarn dev` to test locally
+5. `yarn deploy` to deploy to vercel 💪
 
 I tried to make configuration as easy as possible — All you really need to do to get started is edit `rootNotionPageId`.
 

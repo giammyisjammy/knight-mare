@@ -7,9 +7,8 @@
   "repository": "giammyisjammy/knight-mare",
   "license": "MIT",
   "engines": {
-    "node": ">=18"
+    "node": ">=16"
   },
-  "packageManager": "pnpm@8.6.11",
   "scripts": {
     "start": "next start",
     "build": "next build",
@@ -96,7 +95,7 @@
     }
   },
   "volta": {
-    "node": "18.17.0",
-    "pnpm": "8.6.11"
+    "node": "16.20.2",
+    "yarn": "1.22.4"
   }
 }
