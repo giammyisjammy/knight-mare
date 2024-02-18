@@ -31,6 +31,21 @@
   color: rgba(55, 53, 47, 0.4);
 }
 
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.2); /* transparent light gray */
+}
+
+.iconContainer {
+  width: 100%;
+  /* aspect-ratio: 16 / 9; */
+  aspect-ratio: 1 / 1;
+}
+
 .main {
   display: flex;
   flex-direction: column;
