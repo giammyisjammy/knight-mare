@@ -1,6 +1,9 @@
 export interface IClubMemberDTO {
   id: string
-  fullName: string
+  // Nome
+  firstName: string
+  // Cognome
+  lastName: string
   // Stato pagamenti
   paymentStatus: string
   // CAP
@@ -86,10 +89,11 @@ export class ClubMember {
   }
 
   static deserialize(dto: IClubMemberDTO): ClubMember {
-    const [firstName, lastName] = dto.fullName.split(' ')
     const model = new ClubMember(
-      firstName,
-      lastName,
+      // Nome
+      dto.firstName,
+      // Cognome
+      dto.lastName,
       // Stato pagamenti
       dto.paymentStatus,
       // CAP
@@ -133,7 +137,10 @@ export class ClubMember {
   serialize(): IClubMemberDTO {
     return {
       id: this.id,
-      fullName: this.fullName,
+      // Nome
+      firstName: this.firstName,
+      // Cognome
+      lastName: this.lastName,
       // Stato pagamenti
       paymentStatus: this.paymentStatus,
       // CAP
