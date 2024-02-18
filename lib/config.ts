@@ -158,7 +158,7 @@ export const api = {
   getSocialImage: `${apiBaseUrl}/social-image`,
   createNewMember: `${apiBaseUrl}/create-new-member`,
   retrieveMembershipTypes: `${apiBaseUrl}/retrieve-membership-types`
-}
+} as const
 
 // ----------------------------------------------------------------------------
 

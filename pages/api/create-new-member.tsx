@@ -13,7 +13,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
   const newClubMember = ClubMember.deserialize(JSON.parse(req.body))
 
-  let isSuccesfullyRegistered = false
+  let isSuccessfullyRegistered = false
   try {
     console.log('<<< typeof body', typeof req.body)
     console.log('<<< lambda create-database-entry', newClubMember)
@@ -21,7 +21,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     const results = await createRegisterOfMemberEntry(newClubMember)
     console.log('>>> lambda create-database-entry', results.id)
 
-    isSuccesfullyRegistered = !!results.id
+    isSuccessfullyRegistered = !!results.id
 
     res.status(200).json({ ok: true })
   } catch (error) {
@@ -33,7 +33,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     // send telegram notification
     const message = notificationMessages.newSubscription({
       member: newClubMember,
-      isSuccesfullyRegistered
+      isSuccessfullyRegistered
     })
     console.log('<<< lambda send-notification', {
       CHAT_ID,

@@ -102,7 +102,7 @@ export const DarkModeToggle = ({
                 fill='var(--fg-color)'
                 style={{
                   ...props,
-                  transform: transform.interpolate((t) => `scale(${t})`)
+                  transform: transform.to((t) => `scale(${t})`)
                 }}
               />
             )

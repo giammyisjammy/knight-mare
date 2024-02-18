@@ -1,7 +1,6 @@
 import * as React from 'react'
 
 import Button from '@mui/material/Button'
-import CircularProgress from '@mui/material/CircularProgress'
 import CssBaseline from '@mui/material/CssBaseline'
 import MenuItem from '@mui/material/MenuItem'
 import Box from '@mui/material/Box'
@@ -21,6 +20,10 @@ import {
 
 import { ClubMember } from '@/lib/ClubMember'
 import type { MembershipType } from '@/lib/types'
+
+import { Loading } from '../Loading'
+
+import styles from '../styles.module.css'
 
 import { PhoneInput } from './components'
 import DateFnsProvider from './DateFnsProvider'
@@ -45,7 +48,7 @@ type Props =
           memberInfo?: never
         }
     )
-export default function MembershipForm({
+export function MembershipForm({
   className,
   membershipTypes,
   onConfirm,
@@ -248,11 +251,15 @@ export default function MembershipForm({
                     sx={{ mt: 3, mb: 2 }}
                     disabled={isSubmitting}
                   >
-                    {isSubmitting && <CircularProgress size={24} />}
                     Invia
                   </Button>
                 </Box>
               </Box>
+              {isSubmitting && (
+                <div className={styles.overlay}>
+                  <Loading />
+                </div>
+              )}
             </Container>
           </FormContainer>
         </DateFnsProvider>
