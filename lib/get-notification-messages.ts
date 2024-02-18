@@ -13,12 +13,12 @@ function getAge(birthDate: Date) {
 export const notificationMessages = {
   newSubscription: ({
     member,
-    isSuccesfullyRegistered = false,
+    isSuccessfullyRegistered = false,
     isMailSent = false,
     isPaymentStatusOk = false
   }: {
     member: ClubMember
-    isSuccesfullyRegistered?: boolean
+    isSuccessfullyRegistered?: boolean
     isMailSent?: boolean
     isPaymentStatusOk?: boolean
   }) => `Ue! Abbiamo un nuovo iscritto!
@@ -26,7 +26,7 @@ export const notificationMessages = {
 🧑 ${member.fullName} (età ${getAge(member.birthDate)})
 🪪 ${member.membershipType}
 
-${isSuccesfullyRegistered ? '✅' : '❌'} Registrato su libro soci
+${isSuccessfullyRegistered ? '✅' : '❌'} Registrato su libro soci
 ${isMailSent ? '✅' : '❌'} Mail con documenti
 ${isPaymentStatusOk ? '✅' : '❌'} Pagamento
 
