@@ -32,6 +32,7 @@ export async function batchRegistrationEmails() {
     }
   )
 
+  // Prepare attachments with members data
   const afterAttachmentPrepared = await pMapParallel(
     afterAttachmentFetched,
     async (value) => ({
@@ -40,7 +41,7 @@ export async function batchRegistrationEmails() {
     })
   )
 
-  // Send email
+  // Send emails
   const afterMailSent = await pMapParallel(
     afterAttachmentPrepared,
     async ({ member, humanReadableFileName, pdfBytes, ...rest }) => {
@@ -85,19 +86,31 @@ export async function batchRegistrationEmails() {
     }
   )
 
+  // await pMapParallel(afterMailSent, ({ mailResult }) => console.log(mailResult))
+
+  // Update membership status in Notion
+  const afterEntriesUpdate = await pMapParallel(
+    afterMailSent,
+    async (entry) => {
+      entry.member.membershipStatus = 'Ricevere documenti firmati'
+      await notion.updateMember(entry.member)
+      return entry
+    }
+  )
+
+  // print report to console
   console.log(
-    'afterMailSent',
-    afterMailSent.map((x) =>
+    'afterEntriesUpdate',
+    afterEntriesUpdate.map((x) =>
       match(x)
-        .with(
-          { status: 'fulfilled' },
-          ({ value: { mailResult } }) => mailResult
-        )
+        .with({ status: 'fulfilled' }, ({ value: { member, mailResult } }) => ({
+          member,
+          mailResult
+        }))
         .with({ status: 'rejected' }, ({ reason }) => reason)
         .exhaustive()
     )
   )
-  // TODO on successful send, update status in notion
 }
 
 // helpers

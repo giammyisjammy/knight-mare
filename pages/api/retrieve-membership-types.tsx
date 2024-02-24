@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 
-import { retrieveMembershipTypes } from '@/lib/notion'
+import { retrievePublicMembershipTypes } from '@/lib/notion'
 
 // import { search } from '../../lib/notion'
 
@@ -13,8 +13,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     console.log('<<< typeof body', typeof req.body)
 
-    const results = await retrieveMembershipTypes()
-    console.log('>>> lambda retrieveMembershipTypes', results)
+    const results = await retrievePublicMembershipTypes()
+    console.log('>>> lambda retrievePublicMembershipTypes', results)
 
     res.status(200).json({ ok: true, membershipTypes: results })
   } catch (error) {

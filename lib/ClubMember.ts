@@ -137,52 +137,6 @@ export class ClubMember {
     return model
   }
 
-  static fromNotionPageEntry(entry: PageObjectResponse): ClubMember {
-    const model = new ClubMember(
-      // Nome
-      propertyMatcher(entry.properties['Nome e Cognome']),
-      // Cognome
-      '', // HACK need to update Notion table with more granular fields
-      // Stato pagamenti
-      propertyMatcher(entry.properties['Stato Pagamenti']),
-      // CAP
-      propertyMatcher(entry.properties['CAP']),
-      // Codice Fiscale
-      propertyMatcher(entry.properties['Codice Fiscale']),
-      // Consenso privacy
-      propertyMatcher(entry.properties['Consenso Privacy']),
-      // Consenso trattamento immagini
-      propertyMatcher(entry.properties['Consenso Trattamento Immagini']),
-      // Creato il
-      propertyMatcher(entry.properties['Creato il']),
-      // Data di Nascita
-      propertyMatcher(entry.properties['Data di Nascita']),
-      // Email
-      propertyMatcher(entry.properties['Email']),
-      // Indirizzo
-      propertyMatcher(entry.properties['Indirizzo']),
-      // Nato/a a
-      propertyMatcher(entry.properties['Nato/a a']),
-      // Provincia di Nascita
-      propertyMatcher(entry.properties['Provincia di Nascita']),
-      // Provincia residenza
-      propertyMatcher(entry.properties['Provincia di Residenza']),
-      // Residente in
-      propertyMatcher(entry.properties['Residente in']),
-      // Stato associativo
-      propertyMatcher(entry.properties['Stato Associativo']),
-      // Telefono
-      propertyMatcher(entry.properties['Telefono']),
-      // Tipologia affiliazione,
-      propertyMatcher(entry.properties['Tipologia Affiliazione']),
-      // Ultima modifica
-      propertyMatcher(entry.properties['Ultima modifica'])
-    )
-    model.id = propertyMatcher(entry.properties['ID'])
-
-    return model
-  }
-
   serialize(): IClubMemberDTO {
     return {
       id: this.id,
@@ -226,6 +180,158 @@ export class ClubMember {
       lastEdit: this.lastEdit.toISOString()
     }
   }
+
+  static fromNotionPageEntry(entry: PageObjectResponse): ClubMember {
+    console.log(
+      '[fromNotionPageEntry]',
+      entry.properties['Nome e Cognome'],
+      entry
+    )
+    const model = new ClubMember(
+      // Nome
+      propertyMatcher(entry.properties['Nome e Cognome']),
+      // Cognome
+      '', // HACK need to update Notion table with more granular fields
+      // Stato pagamenti
+      propertyMatcher(entry.properties['Stato Pagamenti']),
+      // CAP
+      propertyMatcher(entry.properties['CAP']),
+      // Codice Fiscale
+      propertyMatcher(entry.properties['Codice Fiscale']),
+      // Consenso privacy
+      propertyMatcher(entry.properties['Consenso Privacy']),
+      // Consenso trattamento immagini
+      propertyMatcher(entry.properties['Consenso Trattamento Immagini']),
+      // Creato il
+      propertyMatcher(entry.properties['Creato il']),
+      // Data di Nascita
+      propertyMatcher(entry.properties['Data di Nascita']),
+      // Email
+      propertyMatcher(entry.properties['Email']),
+      // Indirizzo
+      propertyMatcher(entry.properties['Indirizzo']),
+      // Nato/a a
+      propertyMatcher(entry.properties['Nato/a a']),
+      // Provincia di Nascita
+      propertyMatcher(entry.properties['Provincia di Nascita']),
+      // Provincia residenza
+      propertyMatcher(entry.properties['Provincia di Residenza']),
+      // Residente in
+      propertyMatcher(entry.properties['Residente in']),
+      // Stato associativo
+      propertyMatcher(entry.properties['Stato Associativo']),
+      // Telefono
+      propertyMatcher(entry.properties['Telefono']),
+      // Tipologia affiliazione,
+      propertyMatcher(entry.properties['Tipologia Affiliazione']),
+      // Ultima modifica
+      propertyMatcher(entry.properties['Ultima modifica'])
+    )
+    model.id = entry.id
+
+    return model
+  }
+
+  toNotionPage() {
+    return {
+      page_id: this.id,
+      properties: {
+        'Nome e Cognome': {
+          title: [
+            {
+              text: {
+                content: this.fullName
+              }
+            }
+          ]
+        },
+        CAP: {
+          // id: 'vjFZ',
+          rich_text: [
+            {
+              text: { content: this.CAP }
+            }
+          ]
+        },
+        'Codice Fiscale': {
+          // id: 'qve%3B',
+          rich_text: [
+            {
+              text: { content: this.fiscalCode }
+            }
+          ]
+        },
+        'Consenso Privacy': {
+          // id: 'UNGT',
+          checkbox: this.privacyConsent
+        },
+        'Consenso Trattamento Immagini': {
+          // id: 'yz%5Bs',
+          checkbox: this.imagesConsent
+        },
+        'Data di Nascita': {
+          // id: 'FkdU',
+          date: { start: this.birthDate.toISOString() }
+        },
+        Email: {
+          // id: 'Bbwe',
+          email: this.email
+        },
+        Indirizzo: {
+          // id: 'IFxf',
+          rich_text: [
+            {
+              text: { content: this.address }
+            }
+          ]
+        },
+        'Nato/a a': {
+          // id: 'js%7Dj',
+          select: {
+            name: this.birthPlace
+          }
+        },
+        'Provincia di Residenza': {
+          // id: '%3E%5E%3D%3C',
+          select: { name: this.birthProvince }
+        },
+        'Provincia di Nascita': {
+          // id: '%3Fehm',
+          select: { name: this.cityProvince }
+        },
+        'Residente in': {
+          // id: 'ATv%7D',
+          select: {
+            name: this.city
+          }
+        },
+        Telefono: {
+          // id: 'NNIC',
+          phone_number: this.phoneNr
+        },
+        'Tipologia Affiliazione': {
+          // id: '_%3Bj%3C',
+          select: {
+            // id: '_UJ`',
+            name: this.membershipType
+          }
+        },
+        'Stato Pagamenti': {
+          // id: 'CohL',
+          type: 'select',
+          select: {
+            name: this.paymentStatus
+          }
+        },
+        'Stato Associativo': {
+          // id: 'x%3EU%3E',
+          select: {
+            name: this.membershipStatus
+          }
+        }
+      }
+    } as const
+  }
 }
 
 type Property = PageObjectResponse['properties'][string]
@@ -237,14 +343,14 @@ const propertyMatcher = <TOutput extends string | boolean | Date | undefined>(
       title.map((value) => value.plain_text).join('')
     )
     .with({ type: 'unique_id' }, ({ unique_id }) =>
-      [unique_id.prefix, unique_id.number].filter(Boolean).join('-')
+      [unique_id?.prefix, unique_id?.number].filter(Boolean).join('-')
     )
     .with({ type: 'rich_text' }, ({ rich_text }) =>
       rich_text.map((value) => value.plain_text).join(' ')
     )
-    .with({ type: 'select' }, ({ select }) => select.name)
+    .with({ type: 'select' }, ({ select }) => select?.name)
     .with({ type: 'checkbox' }, ({ checkbox }) => checkbox)
-    .with({ type: 'date' }, ({ date }) => new Date(date.start))
+    .with({ type: 'date' }, ({ date }) => new Date(date?.start))
     .with({ type: 'email' }, ({ email }) => email)
     .with({ type: 'phone_number' }, ({ phone_number }) => phone_number)
     .with(

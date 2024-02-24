@@ -64,6 +64,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
   // Invoke cron to send email
   try {
+    console.log('<<< lambda invoke-cron')
+
     await batchRegistrationEmails()
 
     console.log('>>> lambda invoke-cron', { ok: true })

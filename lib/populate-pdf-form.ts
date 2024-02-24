@@ -6,17 +6,12 @@ import { ClubMember } from './ClubMember'
 
 const TEMPLATE_FILE_IDS = {
   adult: '1yKdzWG2YzjgF0I1727LTzvBUfpFGTeOx',
-  minor: 'TODO' // TODO modulo x minore (path)
+  minor: '1NEMwHy9G9eKg06tUPO5Dg_XkJjzKvUjl'
 }
 
 export function getTemplateId(member: ClubMember) {
   const isAdult = !member.membershipType.includes('Under18')
-  if (isAdult) {
-    return TEMPLATE_FILE_IDS.adult
-  } else {
-    // return TEMPLATE_FILE_IDS.minor
-    throw new Error('missing template') // TODO modulo x minore (getTemplateId)
-  }
+  return isAdult ? TEMPLATE_FILE_IDS.adult : TEMPLATE_FILE_IDS.minor
 }
 
 const fieldSelectors = {
@@ -43,31 +38,31 @@ export async function fillPdfForm(filePath: string, member: ClubMember) {
   const pdfDoc = await PDFDocument.load(formPdfBytes)
   const fields = pdfDoc.getForm().getFields()
 
-  const isAdult = !member.membershipType.includes('Under18')
+  // const isAdult = !member.membershipType.includes('Under18')
 
-  if (isAdult) {
-    // Get all values to fill in the PDF form
-    const values = Object.fromEntries(
-      Object.entries(fieldSelectors).map(([fieldName, selectorFn]) => [
-        fieldName,
-        selectorFn(member)
-      ])
-    ) as Record<keyof typeof fieldSelectors, string>
+  // if (isAdult) {
+  // Get all values to fill in the PDF form
+  const values = Object.fromEntries(
+    Object.entries(fieldSelectors).map(([fieldName, selectorFn]) => [
+      fieldName,
+      selectorFn(member)
+    ])
+  ) as Record<keyof typeof fieldSelectors, string>
 
-    // Fill in the fields
-    fields.forEach((field) => {
-      const value = values[field.getName()]
-      if (value !== undefined) {
-        if (field instanceof PDFTextField) {
-          field.setText(value)
-        } else if (field instanceof PDFRadioGroup) {
-          field.select(value)
-        }
+  // Fill in the fields
+  fields.forEach((field) => {
+    const value = values[field.getName()]
+    if (value !== undefined) {
+      if (field instanceof PDFTextField) {
+        field.setText(value)
+      } else if (field instanceof PDFRadioGroup) {
+        field.select(value)
       }
-    })
-  } else {
-    // TODO modulo x minore (parser)
-  }
+    }
+  })
+  // } else {
+  // // TODO modulo x minore (parser)
+  // }
 
   // Serialize the PDFDocument to bytes (a Uint8Array)
   const pdfBytes = await pdfDoc.save()
