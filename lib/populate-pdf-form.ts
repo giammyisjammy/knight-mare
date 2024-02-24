@@ -6,16 +6,17 @@ import { ClubMember } from './ClubMember'
 
 const TEMPLATE_FILE_IDS = {
   adult: '1yKdzWG2YzjgF0I1727LTzvBUfpFGTeOx',
-  minor: 'TODO' // TODO
+  minor: 'TODO' // TODO modulo x minore (path)
 }
 
 export function getTemplateId(member: ClubMember) {
   const isAdult = !member.membershipType.includes('Under18')
-  const templatePath = isAdult
-    ? TEMPLATE_FILE_IDS.adult
-    : TEMPLATE_FILE_IDS.minor
-
-  return templatePath
+  if (isAdult) {
+    return TEMPLATE_FILE_IDS.adult
+  } else {
+    // return TEMPLATE_FILE_IDS.minor
+    throw new Error('missing template') // TODO modulo x minore (getTemplateId)
+  }
 }
 
 const fieldSelectors = {
@@ -65,7 +66,7 @@ export async function fillPdfForm(filePath: string, member: ClubMember) {
       }
     })
   } else {
-    // TODO modulo x minore
+    // TODO modulo x minore (parser)
   }
 
   // Serialize the PDFDocument to bytes (a Uint8Array)

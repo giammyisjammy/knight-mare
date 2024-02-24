@@ -142,7 +142,7 @@ export class ClubMember {
       // Nome
       propertyMatcher(entry.properties['Nome e Cognome']),
       // Cognome
-      '', // HACK
+      '', // HACK need to update Notion table with more granular fields
       // Stato pagamenti
       propertyMatcher(entry.properties['Stato Pagamenti']),
       // CAP
@@ -255,7 +255,7 @@ const propertyMatcher = <TOutput extends string | boolean | Date | undefined>(
       { type: 'last_edited_time' },
       ({ last_edited_time }) => new Date(last_edited_time)
     )
-    .otherwise(() => undefined) as any // HACK
+    .otherwise(() => undefined) as any // HACK type
 export const TEST_MEMBER = new ClubMember(
   'Mariolone',
   'Bubbarello',
