@@ -1,3 +1,6 @@
+import { PageObjectResponse } from '@notionhq/client/build/src/api-endpoints'
+import { match } from 'ts-pattern'
+
 export interface IClubMemberDTO {
   id: string
   // Nome
@@ -85,7 +88,7 @@ export class ClubMember {
   ) {}
 
   get fullName(): string {
-    return `${this.firstName} ${this.lastName}`
+    return `${this.firstName} ${this.lastName}`.trim()
   }
 
   static deserialize(dto: IClubMemberDTO): ClubMember {
@@ -134,6 +137,52 @@ export class ClubMember {
     return model
   }
 
+  static fromNotionPageEntry(entry: PageObjectResponse): ClubMember {
+    const model = new ClubMember(
+      // Nome
+      propertyMatcher(entry.properties['Nome e Cognome']),
+      // Cognome
+      '', // HACK
+      // Stato pagamenti
+      propertyMatcher(entry.properties['Stato Pagamenti']),
+      // CAP
+      propertyMatcher(entry.properties['CAP']),
+      // Codice Fiscale
+      propertyMatcher(entry.properties['Codice Fiscale']),
+      // Consenso privacy
+      propertyMatcher(entry.properties['Consenso Privacy']),
+      // Consenso trattamento immagini
+      propertyMatcher(entry.properties['Consenso Trattamento Immagini']),
+      // Creato il
+      propertyMatcher(entry.properties['Creato il']),
+      // Data di Nascita
+      propertyMatcher(entry.properties['Data di Nascita']),
+      // Email
+      propertyMatcher(entry.properties['Email']),
+      // Indirizzo
+      propertyMatcher(entry.properties['Indirizzo']),
+      // Nato/a a
+      propertyMatcher(entry.properties['Nato/a a']),
+      // Provincia di Nascita
+      propertyMatcher(entry.properties['Provincia di Nascita']),
+      // Provincia residenza
+      propertyMatcher(entry.properties['Provincia di Residenza']),
+      // Residente in
+      propertyMatcher(entry.properties['Residente in']),
+      // Stato associativo
+      propertyMatcher(entry.properties['Stato Associativo']),
+      // Telefono
+      propertyMatcher(entry.properties['Telefono']),
+      // Tipologia affiliazione,
+      propertyMatcher(entry.properties['Tipologia Affiliazione']),
+      // Ultima modifica
+      propertyMatcher(entry.properties['Ultima modifica'])
+    )
+    model.id = propertyMatcher(entry.properties['ID'])
+
+    return model
+  }
+
   serialize(): IClubMemberDTO {
     return {
       id: this.id,
@@ -178,3 +227,52 @@ export class ClubMember {
     }
   }
 }
+
+type Property = PageObjectResponse['properties'][string]
+const propertyMatcher = <TOutput extends string | boolean | Date | undefined>(
+  property: Property
+): TOutput =>
+  match(property)
+    .with({ type: 'title' }, ({ title }) =>
+      title.map((value) => value.plain_text).join('')
+    )
+    .with({ type: 'unique_id' }, ({ unique_id }) =>
+      [unique_id.prefix, unique_id.number].filter(Boolean).join('-')
+    )
+    .with({ type: 'rich_text' }, ({ rich_text }) =>
+      rich_text.map((value) => value.plain_text).join(' ')
+    )
+    .with({ type: 'select' }, ({ select }) => select.name)
+    .with({ type: 'checkbox' }, ({ checkbox }) => checkbox)
+    .with({ type: 'date' }, ({ date }) => new Date(date.start))
+    .with({ type: 'email' }, ({ email }) => email)
+    .with({ type: 'phone_number' }, ({ phone_number }) => phone_number)
+    .with(
+      { type: 'created_time' },
+      ({ created_time }) => new Date(created_time)
+    )
+    .with(
+      { type: 'last_edited_time' },
+      ({ last_edited_time }) => new Date(last_edited_time)
+    )
+    .otherwise(() => undefined) as any // HACK
+export const TEST_MEMBER = new ClubMember(
+  'Mariolone',
+  'Bubbarello',
+  '',
+  '123456',
+  'XXXXXX00X00X000X',
+  true,
+  true,
+  new Date(),
+  new Date(),
+  'stocazzo@mamm.et',
+  'via Dalle Palle 42',
+  'asdf',
+  'SC',
+  'SC',
+  'stocazzo',
+  '',
+  '1234567890',
+  'Socio adulto ordinario (25€)'
+)

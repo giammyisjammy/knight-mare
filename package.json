@@ -30,6 +30,8 @@
     "@emotion/styled": "^11.11.0",
     "@fisch0920/use-dark-mode": "^2.4.0",
     "@fontsource/roboto": "^5.0.8",
+    "@googleapis/drive": "^8.7.0",
+    "@googleapis/gmail": "^9.0.0",
     "@hookform/error-message": "^2.0.1",
     "@keyvhq/core": "^2.0.0",
     "@keyvhq/redis": "^2.0.0",
@@ -68,7 +70,9 @@
     "react-tweet-embed": "^2.0.0",
     "react-use": "^17.3.2",
     "rss": "^1.2.2",
-    "use-sound": "^4.0.1"
+    "ts-pattern": "^5.0.8",
+    "use-sound": "^4.0.1",
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
     "@next/bundle-analyzer": "^13.4.19",
@@ -77,6 +81,7 @@
     "@types/node": "^20.5.1",
     "@types/react": "^18.0.21",
     "@types/react-body-classname": "^1.1.7",
+    "@types/uuid": "^9.0.1",
     "@typescript-eslint/eslint-plugin": "^5.40.0",
     "@typescript-eslint/parser": "^5.40.0",
     "cross-env": "^7.0.2",
@@ -90,7 +95,9 @@
     "prettier": "^2.7.1",
     "ts-node": "^10.9.2",
     "ts-node-dev": "^2.0.0",
-    "typescript": "^4.8.4"
+    "typescript": "^4.8.4",
+    "utility-types": "^3.11.0",
+    "uuid^9.0.1": "link:@types/uuid^9.0.1"
   },
   "overrides": {
     "cacheable-request": {

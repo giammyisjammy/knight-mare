@@ -194,3 +194,26 @@ export async function retrieveMembershipTypes() {
   ]['options'].filter((e) => e.description !== '!private')
   return membershipTypes
 }
+
+export async function retrieveNewMembers() {
+  const databaseId = registerOfMembersDatabaseId
+  return await notionClient.databases.query({
+    database_id: databaseId,
+    filter: {
+      or: [
+        {
+          property: 'Stato Associativo',
+          select: {
+            equals: 'Nuovo'
+          }
+        },
+        {
+          property: 'Stato Associativo',
+          select: {
+            equals: 'Mandare mail'
+          }
+        }
+      ]
+    }
+  })
+}

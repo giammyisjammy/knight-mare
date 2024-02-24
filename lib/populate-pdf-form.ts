@@ -4,20 +4,21 @@ import { PDFDocument, PDFTextField, PDFRadioGroup } from 'pdf-lib'
 
 import { ClubMember } from './ClubMember'
 
-const TEMPLATES = {
-  adult: './lib/pdf/template-adulto.pdf',
-  minor: './lib/pdf/template-minorenni.pdf'
+const TEMPLATE_FILE_IDS = {
+  adult: '1yKdzWG2YzjgF0I1727LTzvBUfpFGTeOx',
+  minor: 'TODO' // TODO
 }
 
-export async function getPdfDoc(member: ClubMember) {
+export function getTemplateId(member: ClubMember) {
   const isAdult = !member.membershipType.includes('Under18')
-  const templatePath = isAdult ? TEMPLATES.adult : TEMPLATES.minor
-  const formPdfBytes = await fs.readFile(templatePath)
-  const pdfDoc = await PDFDocument.load(formPdfBytes)
-  return pdfDoc
+  const templatePath = isAdult
+    ? TEMPLATE_FILE_IDS.adult
+    : TEMPLATE_FILE_IDS.minor
+
+  return templatePath
 }
 
-const FIELDS = {
+const fieldSelectors = {
   fullName: (member: ClubMember) => member.fullName,
   birthPlace: (member: ClubMember) => member.birthPlace,
   birthDate: (member: ClubMember) => member.birthDate.toLocaleDateString('it'),
@@ -36,21 +37,21 @@ const FIELDS = {
   }
 } as const
 
-export default async function fillPdfForm(
-  pdfDoc: PDFDocument,
-  member: ClubMember
-) {
-  const isAdult = !member.membershipType.includes('Under18')
+export async function fillPdfForm(filePath: string, member: ClubMember) {
+  const formPdfBytes = await fs.readFile(filePath)
+  const pdfDoc = await PDFDocument.load(formPdfBytes)
   const fields = pdfDoc.getForm().getFields()
+
+  const isAdult = !member.membershipType.includes('Under18')
 
   if (isAdult) {
     // Get all values to fill in the PDF form
     const values = Object.fromEntries(
-      Object.entries(FIELDS).map(([fieldName, selectorFn]) => [
+      Object.entries(fieldSelectors).map(([fieldName, selectorFn]) => [
         fieldName,
         selectorFn(member)
       ])
-    ) as Record<keyof typeof FIELDS, string>
+    ) as Record<keyof typeof fieldSelectors, string>
 
     // Fill in the fields
     fields.forEach((field) => {
@@ -63,8 +64,6 @@ export default async function fillPdfForm(
         }
       }
     })
-
-    console.log('[fillPdfForm] it worked!', values)
   } else {
     // TODO modulo x minore
   }
