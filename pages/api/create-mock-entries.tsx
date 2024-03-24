@@ -4,6 +4,7 @@ import { mockMemberGenerator } from '@/lib/ClubMember'
 import { createRegisterOfMemberEntry } from '@/lib/notion'
 import { failWrapper } from '@/lib/utils'
 import P from '@/lib/promises/helpers'
+import * as Settled from '@/lib/promises/Settled'
 
 const mockData = [...mockMemberGenerator()]
 
@@ -33,31 +34,26 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     console.log('<<< typeof body', typeof req.body)
     console.log('<<< lambda create-mock-entries', tasks.length)
 
-    const responses = await P.map(
-      tasks,
-      P.pipe(({ member, task }) =>
-        P.Settled.of(async () => ({
-          member,
-          task: await task()
-        }))
+    await P.pipe(
+      () => tasks,
+      P.map(
+        ({ member, task }) =>
+          Settled.of(async () => ({
+            member,
+            task: await task()
+          })),
+        { concurrency: 1 }
       ),
-      { concurrency: 1 }
-    )
-
-    // print report to console
-    console.log(
-      'mocked',
-      responses.map(
-        P.Settled.match(
-          (error) => error,
-          ({ member, task: { id } }) => ({
+      Settled.match(
+        (error) => console.warn(error),
+        ({ member, task: { id } }) =>
+          console.log({
             status: 'fulfilled',
             id,
             member: member.fullName
           })
-        )
       )
-    )
+    )()
 
     res.status(200).json({ ok: true })
   } catch (error: unknown) {

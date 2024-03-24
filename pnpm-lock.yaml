@@ -11,6 +11,9 @@ dependencies:
   '@emotion/styled':
     specifier: ^11.11.0
     version: 11.11.0(@emotion/react@11.11.1)(@types/react@18.0.21)(react@18.2.0)
+  '@faker-js/faker':
+    specifier: ^8.4.1
+    version: 8.4.1
   '@fisch0920/use-dark-mode':
     specifier: ^2.4.0
     version: 2.4.0(react@18.2.0)
@@ -65,6 +68,9 @@ dependencies:
   fathom-client:
     specifier: ^3.4.1
     version: 3.4.1
+  fp-ts:
+    specifier: ^2.16.2
+    version: 2.16.2
   got:
     specifier: ^12.0.3
     version: 12.0.3
@@ -98,6 +104,9 @@ dependencies:
   p-memoize:
     specifier: ^7.1.1
     version: 7.1.1
+  p-pipe:
+    specifier: ^4.0.0
+    version: 4.0.0
   pdf-lib:
     specifier: ^1.17.1
     version: 1.17.1
@@ -1854,6 +1863,11 @@ packages:
     resolution: {integrity: sha512-gMsVel9D7f2HLkBma9VbtzZRehRogVRfbr++f06nL2vnCGCNlzOD+/MUov/F4p8myyAHspEhVobgjpX64q5m6A==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     dev: true
+
+  /@faker-js/faker@8.4.1:
+    resolution: {integrity: sha512-XQ3cU+Q8Uqmrbf2e0cIC/QN43sTBSC8KF12u29Mb47tWrt2hAgBXSgpZMj4Ao8Uk0iJcU99QsOCaIL8934obCg==}
+    engines: {node: ^14.17.0 || ^16.13.0 || >=18.0.0, npm: '>=6.14.13'}
+    dev: false
 
   /@fisch0920/medium-zoom@1.0.7:
     resolution: {integrity: sha512-hPUrgVM/QvsZdZzDTPyL1C1mOtEw03RqTLmK7ZlJ8S/64u4O4O5BvPvjB/9kyLtE6iVaS9UDRAMSwmM9uh2JIw==}
@@ -5326,6 +5340,10 @@ packages:
       mime-types: 2.1.35
     dev: false
 
+  /fp-ts@2.16.2:
+    resolution: {integrity: sha512-CkqAjnIKFqvo3sCyoBTqgJvF+bHrSik584S9nhTjtBESLx26cbtVMR/T9a6ApChOcSDAaM3JydDmWDUn4EEXng==}
+    dev: false
+
   /fresh@0.5.2:
     resolution: {integrity: sha512-zJ2mQYM18rEFOudeV4GShTGIQ7RbzA7ozbU9I/XBpm7kqgMywgmylMwXHxZJmkVoYkna9d2pVXVXPdYTP9ej8Q==}
     engines: {node: '>= 0.6'}
@@ -7383,6 +7401,11 @@ packages:
     dependencies:
       mimic-fn: 4.0.0
       type-fest: 3.13.1
+    dev: false
+
+  /p-pipe@4.0.0:
+    resolution: {integrity: sha512-HkPfFklpZQPUKBFXzKFB6ihLriIHxnmuQdK9WmLDwe4hf2PdhhfWT/FJa+pc3bA1ywvKXtedxIRmd4Y7BTXE4w==}
+    engines: {node: '>=12'}
     dev: false
 
   /p-queue@7.4.1:
