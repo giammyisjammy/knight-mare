@@ -73,8 +73,8 @@ export async function search(params: SearchParams): Promise<SearchResults> {
 
 export async function createRegisterOfMemberEntry(newClubMember: ClubMember) {
   // force some values
-  newClubMember.paymentStatus = 'Irregolare'
-  newClubMember.membershipStatus = 'Nuovo'
+  // newClubMember.paymentStatus = 'Irregolare'
+  // newClubMember.membershipStatus = 'Nuovo'
 
   const { properties } = newClubMember.toNotionPage()
   return await notionClient.pages.create({

@@ -1,5 +1,13 @@
 import { PageObjectResponse } from '@notionhq/client/build/src/api-endpoints'
+import { fakerIT as faker } from '@faker-js/faker'
 import { match } from 'ts-pattern'
+
+import { PAYMENT_STATUS, MEMBERSHIP_STATUS, MEMBERSHIP_TYPE } from './constants'
+import type {
+  PaymentStatus,
+  MembershipStatus,
+  MembershipType
+} from './constants'
 
 export interface IClubMemberDTO {
   id: string
@@ -8,7 +16,7 @@ export interface IClubMemberDTO {
   // Cognome
   lastName: string
   // Stato pagamenti
-  paymentStatus: string
+  paymentStatus: PaymentStatus
   // CAP
   CAP: string
   // Codice Fiscale
@@ -34,11 +42,11 @@ export interface IClubMemberDTO {
   // Residente in
   city: string
   // Stato associativo
-  membershipStatus: string
+  membershipStatus: MembershipStatus
   // Telefono
   phoneNr: string
   // Tipologia affiliazione
-  membershipType: string
+  membershipType: MembershipType
   // Ultima modifica
   lastEdit: string
 }
@@ -51,9 +59,9 @@ export class ClubMember {
     public firstName = '',
     // Cognome
     public lastName = '',
-    // TODO Stato pagamenti
-    public paymentStatus = '',
-    // TODO CAP
+    // Stato pagamenti
+    public paymentStatus: PaymentStatus = PAYMENT_STATUS.NotOk,
+    // CAP
     public CAP = '',
     // Codice Fiscale
     public fiscalCode = '',
@@ -78,11 +86,11 @@ export class ClubMember {
     // Residente in
     public city = '',
     // Stato associativo
-    public membershipStatus = '',
+    public membershipStatus: MembershipStatus = MEMBERSHIP_STATUS.New,
     // Telefono
     public phoneNr = '',
     // Tipologia affiliazione
-    public membershipType = '',
+    public membershipType: MembershipType = MEMBERSHIP_TYPE.Ordinary,
     // Ultima modifica
     public lastEdit: Date = new Date()
   ) {}
@@ -182,11 +190,6 @@ export class ClubMember {
   }
 
   static fromNotionPageEntry(entry: PageObjectResponse): ClubMember {
-    console.log(
-      '[fromNotionPageEntry]',
-      entry.properties['Nome e Cognome'],
-      entry
-    )
     const model = new ClubMember(
       // Nome
       propertyMatcher(entry.properties['Nome e Cognome']),
@@ -236,99 +239,42 @@ export class ClubMember {
     return {
       page_id: this.id,
       properties: {
-        'Nome e Cognome': {
-          title: [
-            {
-              text: {
-                content: this.fullName
-              }
-            }
-          ]
-        },
-        CAP: {
-          // id: 'vjFZ',
-          rich_text: [
-            {
-              text: { content: this.CAP }
-            }
-          ]
-        },
+        'Nome e Cognome': { title: [{ text: { content: this.fullName } }] },
+        // id: 'vjFZ',
+        CAP: { rich_text: [{ text: { content: this.CAP } }] },
+        // id: 'qve%3B',
         'Codice Fiscale': {
-          // id: 'qve%3B',
-          rich_text: [
-            {
-              text: { content: this.fiscalCode }
-            }
-          ]
+          rich_text: [{ text: { content: this.fiscalCode } }]
         },
-        'Consenso Privacy': {
-          // id: 'UNGT',
-          checkbox: this.privacyConsent
-        },
-        'Consenso Trattamento Immagini': {
-          // id: 'yz%5Bs',
-          checkbox: this.imagesConsent
-        },
-        'Data di Nascita': {
-          // id: 'FkdU',
-          date: { start: this.birthDate.toISOString() }
-        },
-        Email: {
-          // id: 'Bbwe',
-          email: this.email
-        },
-        Indirizzo: {
-          // id: 'IFxf',
-          rich_text: [
-            {
-              text: { content: this.address }
-            }
-          ]
-        },
-        'Nato/a a': {
-          // id: 'js%7Dj',
-          select: {
-            name: this.birthPlace
-          }
-        },
-        'Provincia di Residenza': {
-          // id: '%3E%5E%3D%3C',
-          select: { name: this.birthProvince }
-        },
-        'Provincia di Nascita': {
-          // id: '%3Fehm',
-          select: { name: this.cityProvince }
-        },
-        'Residente in': {
-          // id: 'ATv%7D',
-          select: {
-            name: this.city
-          }
-        },
-        Telefono: {
-          // id: 'NNIC',
-          phone_number: this.phoneNr
-        },
-        'Tipologia Affiliazione': {
-          // id: '_%3Bj%3C',
-          select: {
-            // id: '_UJ`',
-            name: this.membershipType
-          }
-        },
+        // id: 'UNGT',
+        'Consenso Privacy': { checkbox: this.privacyConsent },
+        // id: 'yz%5Bs',
+        'Consenso Trattamento Immagini': { checkbox: this.imagesConsent },
+        // id: 'FkdU',
+        'Data di Nascita': { date: { start: this.birthDate.toISOString() } },
+        // id: 'Bbwe',
+        Email: { email: this.email },
+        // id: 'IFxf',
+        Indirizzo: { rich_text: [{ text: { content: this.address } }] },
+        // id: 'js%7Dj',
+        'Nato/a a': { select: { name: this.birthPlace } },
+        // id: '%3E%5E%3D%3C',
+        'Provincia di Residenza': { select: { name: this.birthProvince } },
+        // id: '%3Fehm',
+        'Provincia di Nascita': { select: { name: this.cityProvince } },
+        // id: 'ATv%7D',
+        'Residente in': { select: { name: this.city } },
+        // id: 'NNIC',
+        Telefono: { phone_number: this.phoneNr },
+        // id: '_%3Bj%3C',
+        'Tipologia Affiliazione': { select: { name: this.membershipType } },
+        // id: 'CohL',
         'Stato Pagamenti': {
-          // id: 'CohL',
           type: 'select',
-          select: {
-            name: this.paymentStatus
-          }
+          select: { name: this.paymentStatus }
         },
-        'Stato Associativo': {
-          // id: 'x%3EU%3E',
-          select: {
-            name: this.membershipStatus
-          }
-        }
+        // id: 'x%3EU%3E',
+        'Stato Associativo': { select: { name: this.membershipStatus } }
       }
     } as const
   }
@@ -362,10 +308,50 @@ const propertyMatcher = <TOutput extends string | boolean | Date | undefined>(
       ({ last_edited_time }) => new Date(last_edited_time)
     )
     .otherwise(() => undefined) as any // HACK type
+
+export const mockMemberGenerator = function* () {
+  for (const payment of Object.values(PAYMENT_STATUS)) {
+    for (const membership of Object.values(MEMBERSHIP_STATUS)) {
+      for (const memberType of Object.values(MEMBERSHIP_TYPE)) {
+        const firstName = faker.person.firstName()
+        const lastName = faker.person.lastName()
+        const email = faker.internet
+          .email({
+            firstName,
+            lastName,
+            provider: 'fakemail.dev'
+          })
+          .toLowerCase()
+
+        yield new ClubMember(
+          firstName,
+          lastName,
+          payment,
+          faker.location.zipCode(),
+          'XXXXXX00X00X000X',
+          true,
+          true,
+          new Date(),
+          faker.date.birthdate(),
+          email,
+          faker.location.streetAddress(),
+          faker.location.city(),
+          faker.location.state({ abbreviated: true }),
+          faker.location.state({ abbreviated: true }),
+          faker.location.city(),
+          membership,
+          faker.phone.number(),
+          memberType
+        )
+      }
+    }
+  }
+}
+
 export const TEST_MEMBER = new ClubMember(
   'Mariolone',
   'Bubbarello',
-  '',
+  PAYMENT_STATUS.Ok,
   '123456',
   'XXXXXX00X00X000X',
   true,
@@ -378,7 +364,7 @@ export const TEST_MEMBER = new ClubMember(
   'SC',
   'SC',
   'stocazzo',
-  '',
+  MEMBERSHIP_STATUS.Active,
   '1234567890',
-  'Socio adulto ordinario (25€)'
+  MEMBERSHIP_TYPE.Ordinary
 )
