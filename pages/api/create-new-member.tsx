@@ -3,9 +3,11 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import { ClubMember } from '@/lib/ClubMember'
 import { createRegisterOfMemberEntry } from '@/lib/notion'
 import { notificationMessages } from '@/lib/get-notification-messages'
-import { bot, CHAT_ID, MESSAGE_THREAD_ID } from '@/lib/telegram-bot'
+import { bot } from '@/lib/telegram-bot'
 import { failWrapper } from '@/lib/utils'
 import { batchRegistrationEmails } from '@/lib/batch-registration-emails'
+
+import * as config from '@/lib/config'
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const fail = failWrapper(res)
@@ -42,20 +44,14 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
   // Send telegram notification
   try {
+    const { message_thread_id, chatId } = config.telegram
     const message = notificationMessages.newSubscription({
       member: newClubMember,
       isSuccessfullyRegistered
     })
-    const options = {
-      message_thread_id: MESSAGE_THREAD_ID,
-      parse_mode: 'HTML'
-    } as const
-    console.log('<<< lambda send-notification', {
-      CHAT_ID,
-      message,
-      options
-    })
-    const telegramResult = await bot.api.sendMessage(CHAT_ID, message, options)
+    const options = { message_thread_id, parse_mode: 'HTML' } as const
+    console.log('<<< lambda send-notification', { chatId, message, options })
+    const telegramResult = await bot.api.sendMessage(chatId, message, options)
     // TODO store telegramResult to later update the message with cron mail outcome
     console.log('>>> lambda send-notification', telegramResult)
   } catch (error: unknown) {

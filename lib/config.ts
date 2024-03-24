@@ -140,6 +140,13 @@ export const registerOfMembersDatabaseId = getEnv(
   null
 )
 
+
+// TODO verify correct loading
+export const telegram = {
+  token: getEnv('NEXT_TELEGRAM_TOKEN'),
+  chatId: Number(getEnv('NEXT_TELEGRAM_CHAT_ID')),
+  message_thread_id: Number(getEnv('NEXT_TELEGRAM_MESSAGE_THREAD_ID'))
+}
 // ----------------------------------------------------------------------------
 
 export const isServer = typeof window === 'undefined'
