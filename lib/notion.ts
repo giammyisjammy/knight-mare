@@ -13,6 +13,7 @@ import {
 } from './config'
 import { notion, notionClient } from './notion-api'
 import { getPreviewImageMap } from './preview-images'
+import { MembershipType } from './types'
 
 const getNavigationLinkPages = pMemoize(
   async (): Promise<ExtendedRecordMap[]> => {
@@ -71,6 +72,11 @@ export async function search(params: SearchParams): Promise<SearchResults> {
 }
 
 export async function createRegisterOfMemberEntry(newClubMember: ClubMember) {
+  // force some values
+  // newClubMember.paymentStatus = 'Irregolare'
+  // newClubMember.membershipStatus = 'Nuovo'
+
+  const { properties } = newClubMember.toNotionPage()
   return await notionClient.pages.create({
     // cover: {
     //   type: 'external',
@@ -86,111 +92,51 @@ export async function createRegisterOfMemberEntry(newClubMember: ClubMember) {
       type: 'database_id',
       database_id: registerOfMembersDatabaseId
     },
-    properties: {
-      'Nome e Cognome': {
-        title: [
-          {
-            text: {
-              content: newClubMember.fullName
-            }
-          }
-        ]
-      },
-      CAP: {
-        // id: 'vjFZ',
-        rich_text: [
-          {
-            text: { content: newClubMember.CAP }
-          }
-        ]
-      },
-      'Codice Fiscale': {
-        // id: 'qve%3B',
-        rich_text: [
-          {
-            text: { content: newClubMember.fiscalCode }
-          }
-        ]
-      },
-      'Consenso Privacy': {
-        // id: 'UNGT',
-        checkbox: newClubMember.privacyConsent
-      },
-      'Consenso Trattamento Immagini': {
-        // id: 'yz%5Bs',
-        checkbox: newClubMember.imagesConsent
-      },
-      'Data di Nascita': {
-        // id: 'FkdU',
-        date: { start: newClubMember.birthDate.toISOString() }
-      },
-      Email: {
-        // id: 'Bbwe',
-        email: newClubMember.email
-      },
-      Indirizzo: {
-        // id: 'IFxf',
-        rich_text: [
-          {
-            text: { content: newClubMember.address }
-          }
-        ]
-      },
-      'Nato/a a': {
-        // id: 'js%7Dj',
-        select: {
-          name: newClubMember.birthPlace
-        }
-      },
-      'Provincia di Residenza': {
-        // id: '%3E%5E%3D%3C',
-        select: { name: newClubMember.birthProvince }
-      },
-      'Provincia di Nascita': {
-        // id: '%3Fehm',
-        select: { name: newClubMember.cityProvince }
-      },
-      'Residente in': {
-        // id: 'ATv%7D',
-        select: {
-          name: newClubMember.city
-        }
-      },
-      Telefono: {
-        // id: 'NNIC',
-        phone_number: newClubMember.phoneNr
-      },
-      'Tipologia Affiliazione': {
-        // id: '_%3Bj%3C',
-        select: {
-          // id: '_UJ`',
-          name: newClubMember.membershipType
-        }
-      },
-      'Stato Pagamenti': {
-        // id: 'CohL',
-        type: 'select',
-        select: {
-          name: 'Irregolare'
-        }
-      },
-      'Stato Associativo': {
-        // id: 'x%3EU%3E',
-        select: {
-          name: 'Nuovo'
-        }
-      }
-    }
+    properties: properties as any // HACK too hard to type because limited access to Notion internal types
   })
 }
 
-export async function retrieveMembershipTypes() {
+export async function retrievePublicMembershipTypes() {
   const databaseId = registerOfMembersDatabaseId
   const response = await notionClient.databases.retrieve({
     database_id: databaseId
   })
-  const membershipTypes = response.properties['Tipologia Affiliazione'][
-    'select'
-  ]['options'].filter((e) => e.description !== '!private')
+  const membershipTypes: MembershipType[] = response.properties[
+    'Tipologia Affiliazione'
+  ]['select']['options'].filter((e) => e.description !== '!private')
   return membershipTypes
+}
+
+export async function retrieveNewMembers() {
+  const databaseId = registerOfMembersDatabaseId
+  const membershipTypes = await retrievePublicMembershipTypes()
+  return await notionClient.databases.query({
+    database_id: databaseId,
+    filter: {
+      and: [
+        {
+          or: [
+            {
+              property: 'Stato Associativo',
+              select: { equals: 'Nuovo' }
+            },
+            {
+              property: 'Stato Associativo',
+              select: { equals: 'Mandare mail' }
+            }
+          ]
+        },
+        {
+          or: membershipTypes.map((x) => ({
+            property: 'Tipologia Affiliazione',
+            select: { equals: x.name }
+          }))
+        }
+      ]
+    }
+  })
+}
+
+export async function updateMember(member: ClubMember) {
+  return await notionClient.pages.update(member.toNotionPage() as any) // HACK too hard to type because limited access to Notion internal types
 }

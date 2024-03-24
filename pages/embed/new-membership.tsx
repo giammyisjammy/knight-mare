@@ -6,7 +6,7 @@ import PageNewMembership, {
 } from '@/components/PageNewMembership'
 import { domain } from '@/lib/config'
 import { Params } from '@/lib/types'
-import { retrieveMembershipTypes } from '@/lib/notion'
+import { retrievePublicMembershipTypes } from '@/lib/notion'
 
 export const getStaticProps: GetStaticProps<
   NewMembershipPageProps,
@@ -15,7 +15,7 @@ export const getStaticProps: GetStaticProps<
   const rawPageId = 'dev/new-membership'
 
   try {
-    const membershipTypes = await retrieveMembershipTypes()
+    const membershipTypes = await retrievePublicMembershipTypes()
     return { props: { membershipTypes }, revalidate: 10 }
   } catch (err) {
     console.error('page error', domain, rawPageId, err)
