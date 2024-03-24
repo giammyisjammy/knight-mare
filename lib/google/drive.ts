@@ -4,6 +4,8 @@ import readline from 'readline'
 
 import path from 'path'
 
+import ExpiryMap from 'expiry-map'
+
 import { v4 as uuidv4 } from 'uuid'
 import { drive } from '@googleapis/drive'
 
@@ -47,7 +49,11 @@ async function downloadImpl(fileId: string) {
       .pipe(readStream)
   })
 }
-export const download = pMemoize(downloadImpl)
+
+export const download = pMemoize(downloadImpl, {
+  // cacheKey: ([fileId]) => fileId,
+  cache: new ExpiryMap(10000)
+})
 
 type UploadParams = {
   /**
