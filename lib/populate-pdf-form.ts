@@ -2,17 +2,16 @@ import fs from 'fs/promises'
 
 import { PDFDocument, PDFTextField, PDFRadioGroup } from 'pdf-lib'
 
+import { match } from 'ts-pattern'
+
 import { ClubMember } from './ClubMember'
+import { MEMBERSHIP_TYPE } from './constants'
+import { pdfTemplateId } from './config'
 
-const TEMPLATE_FILE_IDS = {
-  adult: '1yKdzWG2YzjgF0I1727LTzvBUfpFGTeOx',
-  minor: '1NEMwHy9G9eKg06tUPO5Dg_XkJjzKvUjl'
-}
-
-export function getTemplateId(member: ClubMember) {
-  const isAdult = !member.membershipType.includes('Under18')
-  return isAdult ? TEMPLATE_FILE_IDS.adult : TEMPLATE_FILE_IDS.minor
-}
+export const getTemplateId = (member: ClubMember) =>
+  match(member.membershipType)
+    .with(MEMBERSHIP_TYPE.U18, () => pdfTemplateId.U18)
+    .otherwise(() => pdfTemplateId.default)
 
 const fieldSelectors = {
   fullName: (member: ClubMember) => member.fullName,
@@ -38,10 +37,7 @@ export async function fillPdfForm(filePath: string, member: ClubMember) {
   const pdfDoc = await PDFDocument.load(formPdfBytes)
   const fields = pdfDoc.getForm().getFields()
 
-  // const isAdult = !member.membershipType.includes('Under18')
-
-  // if (isAdult) {
-  // Get all values to fill in the PDF form
+  // Compute values
   const values = Object.fromEntries(
     Object.entries(fieldSelectors).map(([fieldName, selectorFn]) => [
       fieldName,
@@ -60,9 +56,6 @@ export async function fillPdfForm(filePath: string, member: ClubMember) {
       }
     }
   })
-  // } else {
-  // // TODO modulo x minore (parser)
-  // }
 
   // Serialize the PDFDocument to bytes (a Uint8Array)
   const pdfBytes = await pdfDoc.save()

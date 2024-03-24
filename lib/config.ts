@@ -140,6 +140,10 @@ export const registerOfMembersDatabaseId = getEnv(
   null
 )
 
+export const pdfTemplateId = {
+  default: getEnv('DRIVE_PDF_DEFAULT_TEMPLATE_ID', null),
+  U18: getEnv('DRIVE_PDF_U18_TEMPLATE_ID', null)
+}
 
 // TODO verify correct loading
 export const telegram = {
