@@ -45,6 +45,7 @@
     "classnames": "^2.3.1",
     "date-fns": "^2.28.0",
     "dotenv": "^16.4.1",
+    "effect": "^2.4.17",
     "expiry-map": "^2.0.0",
     "fathom-client": "^3.4.1",
     "fp-ts": "^2.16.2",
