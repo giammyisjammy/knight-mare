@@ -3,7 +3,8 @@ import { Effect, Stream, pipe, Exit, Cause } from 'effect'
 import ProgressBar from 'progress'
 import chalk from 'chalk'
 
-import { ClubMember, mockMemberGenerator } from '@/lib/ClubMember'
+import { ClubMember } from '@/lib/ClubMember'
+import { mockMemberGenerator } from '@/lib/mocks/ClubMember'
 import { createRegisterOfMemberEntry } from '@/lib/notion'
 import { failWrapper } from '@/lib/utils'
 
