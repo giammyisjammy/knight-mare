@@ -145,12 +145,14 @@ export const pdfTemplateId = {
   U18: getEnv('DRIVE_PDF_U18_TEMPLATE_ID', null)
 }
 
+export const testMailAddress: string | null = getEnv('TEST_EMAIL_ADDRESS', null)
+
 // TODO verify correct loading
 export const telegram = {
-  token: getEnv('NEXT_TELEGRAM_TOKEN'),
-  chatId: Number(getEnv('NEXT_TELEGRAM_CHAT_ID')),
-  message_thread_id: Number(getEnv('NEXT_TELEGRAM_MESSAGE_THREAD_ID'))
-}
+  token: getEnv('NEXT_TELEGRAM_TOKEN', null),
+  chatId: Number(getEnv('NEXT_TELEGRAM_CHAT_ID', null)),
+  message_thread_id: Number(getEnv('NEXT_TELEGRAM_MESSAGE_THREAD_ID', null))
+} as const
 // ----------------------------------------------------------------------------
 
 export const isServer = typeof window === 'undefined'

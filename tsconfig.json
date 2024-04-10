@@ -17,6 +17,8 @@
     "baseUrl": ".",
     "typeRoots": ["./node_modules/@types"],
     "incremental": true,
+    "strictNullChecks": true,
+    "exactOptionalPropertyTypes": true,
     "paths": {
       "@/components/*": ["components/*"],
       "@/lib/*": ["lib/*"],

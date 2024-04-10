@@ -1,6 +1,7 @@
-import { PageObjectResponse } from '@notionhq/client/build/src/api-endpoints'
 import { fakerIT as faker } from '@faker-js/faker'
 import { match } from 'ts-pattern'
+
+import type { PageObjectResponse } from '@notionhq/client/build/src/api-endpoints'
 
 import { PAYMENT_STATUS, MEMBERSHIP_STATUS, MEMBERSHIP_TYPE } from './constants'
 import type {
@@ -296,7 +297,9 @@ const propertyMatcher = <TOutput extends string | boolean | Date | undefined>(
     )
     .with({ type: 'select' }, ({ select }) => select?.name)
     .with({ type: 'checkbox' }, ({ checkbox }) => checkbox)
-    .with({ type: 'date' }, ({ date }) => new Date(date?.start))
+    .with({ type: 'date' }, ({ date }) =>
+      date?.start ? new Date(date.start) : undefined
+    )
     .with({ type: 'email' }, ({ email }) => email)
     .with({ type: 'phone_number' }, ({ phone_number }) => phone_number)
     .with(

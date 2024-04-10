@@ -2,7 +2,7 @@ import { gmail } from '@googleapis/gmail'
 import type { Overwrite } from 'utility-types'
 
 import { oauth2Client as auth } from '../oauth2-client'
-import { getEnv } from '../get-config-value'
+import * as config from '../config'
 
 const service = gmail({ version: 'v1', auth })
 
@@ -33,9 +33,7 @@ export async function send({
 }: MailOptions) {
   const recipients = Array.isArray(_to) ? _to.join(', ') : _to
   const to =
-    process.env.NODE_ENV === 'production'
-      ? recipients
-      : getEnv('TEST_EMAIL_ADDRESS', recipients)
+    process.env.NODE_ENV === 'production' ? recipients : config.testMailAddress
 
   const message =
     process.env.NODE_ENV === 'production'

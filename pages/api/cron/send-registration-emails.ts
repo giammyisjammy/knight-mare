@@ -1,6 +1,9 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 
-import { batchRegistrationEmails } from '@/lib/batch-registration-emails'
+// import { batchRegistrationEmails } from '@/lib/batch-registration-emails'
+import { Cause, Effect, Exit, pipe } from 'effect'
+
+import { batchRegistrationEmails } from '@/lib/effect/batch-registration-emails'
 import { failWrapper } from '@/lib/utils'
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
@@ -15,11 +18,26 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     return fail('Unauthorized', 401)
   }
 
-  try {
-    await batchRegistrationEmails()
-
-    res.status(200).end('Successfully sent registration emails')
-  } catch (error: unknown) {
-    fail((error as Error).message)
-  }
+  Effect.runPromiseExit(batchRegistrationEmails).then(
+    Exit.match({
+      onFailure: (cause) =>
+        pipe(
+          cause,
+          Cause.match({
+            onEmpty: '(empty)',
+            onFail: (error) => `(error: ${error.message})`,
+            onDie: (defect) => `(defect: ${defect})`,
+            onInterrupt: (fiberId) => `(fiberId: ${fiberId})`,
+            onSequential: (left, right) =>
+              `(onSequential (left: ${left}) (right: ${right}))`,
+            onParallel: (left, right) =>
+              `(onParallel (left: ${left}) (right: ${right})`
+          }),
+          fail
+        ),
+      onSuccess: () => {
+        res.status(200).end('Successfully sent registration emails')
+      }
+    })
+  )
 }
