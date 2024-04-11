@@ -6,8 +6,13 @@ import P from '@/lib/promises/helpers'
 import * as Settled from '@/lib/promises/Settled'
 import { sendWelcomeMail } from '@/lib/send-welcome-mail'
 
-import { MEMBERSHIP_STATUS } from './constants'
+import { MEMBERSHIP_STATUS } from '../constants'
 
+/**
+ * @deprecated use @/lib/batch-registration-emails instead
+ *
+ * Kept only for historical purposes, I had a lot of fun building this from scratch
+ */
 export async function batchRegistrationEmails() {
   await P.pipe(
     notion.retrieveNewMembers,

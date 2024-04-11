@@ -1,9 +1,9 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 
 // import { batchRegistrationEmails } from '@/lib/batch-registration-emails'
-import { Cause, Effect, Exit, pipe } from 'effect'
+import { Cause, Effect, Either, Exit, ReadonlyArray, pipe } from 'effect'
 
-import { batchRegistrationEmails } from '@/lib/effect/batch-registration-emails'
+import { batchRegistrationEmails } from '@/lib/batch-registration-emails'
 import { failWrapper } from '@/lib/utils'
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
@@ -18,7 +18,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     return fail('Unauthorized', 401)
   }
 
-  Effect.runPromiseExit(batchRegistrationEmails).then(
+  await Effect.runPromiseExit(batchRegistrationEmails).then(
     Exit.match({
       onFailure: (cause) =>
         pipe(
@@ -35,8 +35,15 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
           }),
           fail
         ),
-      onSuccess: () => {
-        res.status(200).end('Successfully sent registration emails')
+      onSuccess: (results) => {
+        const hasErrors = !ReadonlyArray.every(Either.isRight)(results)
+        res
+          .status(200)
+          .end(
+            hasErrors
+              ? `Some emails weren't sent, check your logs`
+              : 'Successfully sent all registration emails'
+          )
       }
     })
   )

@@ -1,4 +1,5 @@
-import * as React from 'react'
+/* eslint-disable react/react-in-jsx-scope */
+// import * as React from 'react'
 import { ImageResponse } from '@vercel/og'
 import type { NextRequest } from 'next/server'
 

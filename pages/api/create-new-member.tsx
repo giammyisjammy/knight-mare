@@ -1,13 +1,16 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 
+import { Effect, Exit, pipe, Cause, ReadonlyArray, Either } from 'effect'
+
 import { ClubMember } from '@/lib/ClubMember'
 import { createRegisterOfMemberEntry } from '@/lib/notion'
 import { notificationMessages } from '@/lib/get-notification-messages'
 import { bot } from '@/lib/telegram-bot'
 import { failWrapper } from '@/lib/utils'
-import { batchRegistrationEmails } from '@/lib/batch-registration-emails'
 
 import * as config from '@/lib/config'
+
+import { batchRegistrationEmails } from '@/lib/batch-registration-emails'
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const fail = failWrapper(res)
@@ -59,13 +62,33 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   }
 
   // Invoke cron to send email
-  try {
-    console.log('<<< lambda invoke-cron')
+  console.log('<<< lambda invoke-cron')
 
-    await batchRegistrationEmails()
-
-    console.log('>>> lambda invoke-cron', { ok: true })
-  } catch (error: unknown) {
-    console.log('>>> Failed to invoke cron job', error)
-  }
+  await Effect.runPromiseExit(batchRegistrationEmails).then(
+    Exit.match({
+      onFailure: (cause) =>
+        pipe(
+          cause,
+          Cause.match({
+            onEmpty: '(empty)',
+            onFail: (error) => `(error: ${error.message})`,
+            onDie: (defect) => `(defect: ${defect})`,
+            onInterrupt: (fiberId) => `(fiberId: ${fiberId})`,
+            onSequential: (left, right) =>
+              `(onSequential (left: ${left}) (right: ${right}))`,
+            onParallel: (left, right) =>
+              `(onParallel (left: ${left}) (right: ${right})`
+          }),
+          (message) => console.log('>>> Failed to invoke cron job', message)
+        ),
+      onSuccess: (results) => {
+        const hasErrors = !ReadonlyArray.every(Either.isRight)(results)
+        const message = hasErrors
+          ? `Some emails weren't sent, check your logs`
+          : 'Successfully sent all registration emails'
+        console.log('>>> lambda invoke-cron', { message })
+        res.status(200).end()
+      }
+    })
+  )
 }
