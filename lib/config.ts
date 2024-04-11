@@ -140,6 +140,19 @@ export const registerOfMembersDatabaseId = getEnv(
   null
 )
 
+export const pdfTemplateId = {
+  default: getEnv('DRIVE_PDF_DEFAULT_TEMPLATE_ID', null),
+  U18: getEnv('DRIVE_PDF_U18_TEMPLATE_ID', null)
+}
+
+export const testMailAddress: string | null = getEnv('TEST_EMAIL_ADDRESS', null)
+
+// TODO verify correct loading
+export const telegram = {
+  token: getEnv('NEXT_TELEGRAM_TOKEN', null),
+  chatId: Number(getEnv('NEXT_TELEGRAM_CHAT_ID', null)),
+  message_thread_id: Number(getEnv('NEXT_TELEGRAM_MESSAGE_THREAD_ID', null))
+} as const
 // ----------------------------------------------------------------------------
 
 export const isServer = typeof window === 'undefined'
@@ -157,7 +170,7 @@ export const api = {
   getNotionPageInfo: `${apiBaseUrl}/notion-page-info`,
   getSocialImage: `${apiBaseUrl}/social-image`,
   createNewMember: `${apiBaseUrl}/create-new-member`,
-  retrieveMembershipTypes: `${apiBaseUrl}/retrieve-membership-types`
+  retrievePublicMembershipTypes: `${apiBaseUrl}/retrieve-membership-types`
 } as const
 
 // ----------------------------------------------------------------------------

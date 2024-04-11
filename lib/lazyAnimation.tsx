@@ -4,7 +4,7 @@ import dynamic from 'next/dynamic'
 // import type { DynamicOptions } from 'next/dynamic'
 import type { LottieComponentProps } from 'lottie-react'
 
-import type { Optional } from './types'
+import type { Optional } from 'utility-types'
 
 export type LazyAnimationProps = Optional<LottieComponentProps, 'animationData'>
 
