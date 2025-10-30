@@ -7,13 +7,13 @@
   "repository": "giammyisjammy/knight-mare",
   "license": "MIT",
   "engines": {
-    "node": ">=18"
+    "node": ">=22"
   },
-  "packageManager": "pnpm@8.6.11",
+  "packageManager": "pnpm@10.19.0",
   "scripts": {
-    "start": "next start",
-    "build": "next build",
     "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
     "deploy": "vercel deploy",
     "deploy:prod": "vercel deploy --prod",
     "analyze": "cross-env ANALYZE=true next build",
@@ -97,7 +97,7 @@
     }
   },
   "volta": {
-    "node": "18.17.0",
-    "pnpm": "8.6.11"
+    "node": "22.14.0",
+    "pnpm": "10.19.0"
   }
 }
